@@ -210,7 +210,6 @@ std::vector<sf::Vector2i> Floor::getPath(sf::Vector2i start, sf::Vector2i end) {
             }
         }
 
-        std::cout << std::endl;
         if (possibleDirections.empty()) {
             path.pop_back();
             currentCell = path.back();
@@ -222,6 +221,5 @@ std::vector<sf::Vector2i> Floor::getPath(sf::Vector2i start, sf::Vector2i end) {
 
         }
     }
-    std::cout << std::endl;
     return path;
 }

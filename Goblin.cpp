@@ -5,9 +5,13 @@ Goblin::Goblin(sf::Vector2i initPos, std::shared_ptr<Floor> floor) : Enemy(initP
 	setTexture();
 }
 
-void Goblin::move() {
-	//this->position += dir;
-	utils::printVector(this->position);
+
+void Goblin::takeTurn() {
+	if (canSeeHero()) {
+		sf::Vector2i moveBy = this->pathToHero[0] - this->position;
+		move(moveBy);
+		std::cout << "took turn" << std::endl;
+	}
 
 }
 

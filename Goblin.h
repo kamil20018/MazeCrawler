@@ -9,7 +9,7 @@
 class Goblin : public Enemy {
 	public:
 		Goblin(sf::Vector2i initPos, std::shared_ptr<Floor> floor);
-		void move();
+		void takeTurn();
 	private:
 		void setTexture();
 };

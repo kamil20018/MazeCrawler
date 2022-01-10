@@ -49,15 +49,19 @@ int main()
         sf::Vector2i heroPos = hero->getPosition();
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) and floor->canMoveTo(heroPos, up)){ 
             hero->move(up);
+            goblin.takeTurn();
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) and floor->canMoveTo(heroPos, down)) {
             hero->move(down);
+            goblin.takeTurn();
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) and floor->canMoveTo(heroPos, left)) {
             hero->move(left);
+            goblin.takeTurn();
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) and floor->canMoveTo(heroPos, right)) {
             hero->move(right);
+            goblin.takeTurn();
         }
 
         window.clear(colors["red"]);
@@ -80,12 +84,6 @@ int main()
         goblinSprite.setPosition(middlePos - toHero.x * 75, middlePos - toHero.y * 75);
         
 
-        std::vector<sf::Vector2i> path = floor->getPath(sf::Vector2i(0, 0), sf::Vector2i(3, 3));
-        
-        for (sf::Vector2i pos : path) {
-            utils::printVector(pos);
-        }
-        std::cout << std::endl;
         
 
         window.draw(mazeSprite);

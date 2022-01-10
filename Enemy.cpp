@@ -12,3 +12,8 @@ sf::Texture& Enemy::getTexture() {
 sf::Vector2i Enemy::getPosition() {
 	return this->position;
 }
+
+bool Enemy::canSeeHero() { //write this later!!!!!!!!!!!!!!!!!!!!!
+
+	return true;
+}

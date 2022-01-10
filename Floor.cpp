@@ -115,7 +115,6 @@ const sf::Texture& Floor::getTexture() {
                 cell.setFillColor(sf::Color::Blue);
             }
             else if (this->seenCells[y][x]) {
-                
                 cell.setFillColor(sf::Color(55, 55, 55));
             }
             else {
@@ -190,4 +189,39 @@ bool Floor::canMoveTo(sf::Vector2i startPos, sf::Vector2i dir) {
             return not verticalWalls[startPos.y + 1][startPos.x];
         }
     }
+}
+
+
+sf::Vector2i Floor::getHeroPos() {
+    return this->hero->getPosition();
+}
+
+std::vector<sf::Vector2i> Floor::getPath(sf::Vector2i start, sf::Vector2i end) {
+    std::vector<std::vector<bool>> visitedCells(height, std::vector<bool>(width, false));
+    std::vector<sf::Vector2i> path{ start };
+    sf::Vector2i currentCell = start;
+    visitedCells[currentCell.y][currentCell.x] = true;
+    while (currentCell != end) {
+        std::vector<sf::Vector2i> possibleDirections;
+        for (sf::Vector2i dir : dirs) {
+            sf::Vector2i testPos = currentCell + dir;
+            if (vectorInBounds(testPos) and canMoveTo(currentCell, dir) and not visitedCells[testPos.y][testPos.x]) {
+                possibleDirections.push_back(testPos);
+            }
+        }
+
+        std::cout << std::endl;
+        if (possibleDirections.empty()) {
+            path.pop_back();
+            currentCell = path.back();
+        }
+        else {
+            currentCell = possibleDirections[rand() % possibleDirections.size()];
+            visitedCells[currentCell.y][currentCell.x] = true;
+            path.push_back(currentCell);
+
+        }
+    }
+    std::cout << std::endl;
+    return path;
 }

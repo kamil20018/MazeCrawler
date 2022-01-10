@@ -8,7 +8,6 @@
 #include <thread>
 #include <memory>
 
-
 #include "Floor.h"
 #include "Hero.h"
 #include "Constants.h"
@@ -31,10 +30,12 @@ int main()
     std::shared_ptr<Hero> hero = std::make_shared<Hero>(sf::Vector2i(1, 1));
     std::shared_ptr<Floor> floor = std::make_shared<Floor>(10, 10, hero);
     //Floor floor(10, 10, hero);
-    Goblin goblin(sf::Vector2i(1, 1), floor);
+    Goblin goblin(sf::Vector2i(3, 3), floor);
     //window init
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Cellular Automata");
     window.setFramerateLimit(30);
+
+    float middlePos = (float)(WINDOW_HEIGHT - 75) / 2;
 
     //app loop
     while (window.isOpen()) {
@@ -66,15 +67,30 @@ int main()
 
         sf::Sprite mazeSprite;
         mazeSprite.setTexture(floorTexture);
-        mazeSprite.setPosition(362.5, 362.5);
+        mazeSprite.setPosition(middlePos, middlePos);
         mazeSprite.move(-heroPos.x * 75, -heroPos.y * 75);
 
         sf::Sprite heroSprite;
         heroSprite.setTexture(hero->getTexture());
-        heroSprite.setPosition(362.5, 362.5);
+        heroSprite.setPosition(middlePos, middlePos);
+
+        sf::Sprite goblinSprite;
+        goblinSprite.setTexture(goblin.getTexture());
+        sf::Vector2i toHero = hero->getPosition() - goblin.getPosition();
+        goblinSprite.setPosition(middlePos - toHero.x * 75, middlePos - toHero.y * 75);
+        
+
+        std::vector<sf::Vector2i> path = floor->getPath(sf::Vector2i(0, 0), sf::Vector2i(3, 3));
+        
+        for (sf::Vector2i pos : path) {
+            utils::printVector(pos);
+        }
+        std::cout << std::endl;
+        
 
         window.draw(mazeSprite);
         window.draw(heroSprite);
+        window.draw(goblinSprite);
         window.display();
     }
     

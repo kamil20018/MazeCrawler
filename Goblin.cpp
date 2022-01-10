@@ -5,8 +5,10 @@ Goblin::Goblin(sf::Vector2i initPos, std::shared_ptr<Floor> floor) : Enemy(initP
 	setTexture();
 }
 
-void Goblin::move(sf::Vector2i dir) {
-	this->position += dir;
+void Goblin::move() {
+	//this->position += dir;
+	utils::printVector(this->position);
+
 }
 
 void Goblin::setTexture() {

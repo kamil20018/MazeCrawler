@@ -14,6 +14,8 @@ class Floor {
 		const sf::Texture& getTexture();
 		sf::RenderTexture renderTexture;
 		bool canMoveTo(sf::Vector2i startPos, sf::Vector2i dir);
+		sf::Vector2i getHeroPos();
+		std::vector<sf::Vector2i> getPath(sf::Vector2i start, sf::Vector2i end);
 
 		
 

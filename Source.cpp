@@ -13,6 +13,7 @@
 #include "Constants.h"
 #include "Enemy.h"
 #include "Goblin.h"
+#include "EnemyManager.h"
 
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 800;
@@ -34,8 +35,19 @@ int main()
     States state = HERO_TURN;
 
     std::shared_ptr<Hero> hero = std::make_shared<Hero>(sf::Vector2i(1, 1));
-    std::shared_ptr<Floor> floor = std::make_shared<Floor>(10, 10, hero);
-    Goblin goblin(sf::Vector2i(3, 3), floor);
+    std::shared_ptr<EnemyManager> enemyManager = std::make_shared<EnemyManager>();
+    std::shared_ptr<Floor> floor = std::make_shared<Floor>(15, 15, hero, enemyManager);
+
+    std::shared_ptr<Goblin> goblin1 = std::make_shared<Goblin>(sf::Vector2i(3, 3), floor);
+    std::shared_ptr<Goblin> goblin2 = std::make_shared<Goblin>(sf::Vector2i(3, 5), floor);
+    std::shared_ptr<Goblin> goblin3 = std::make_shared<Goblin>(sf::Vector2i(3, 7), floor);
+
+
+
+    //EnemyManager enemyManager;
+    enemyManager->addEnemy(goblin1);
+    enemyManager->addEnemy(goblin2);
+    enemyManager->addEnemy(goblin3);
 
     //window init
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Cellular Automata");
@@ -62,65 +74,34 @@ int main()
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) and floor->canMoveTo(heroPos, up)) {
                     triedToMove = true;
                     heroMoved = hero->move(up);
-                    //if (not hero->move(up) and not hero->canMove()) {
-                    //    hero->turnPassed();
-                    //    state = ENEMY_TURN;
-                    //    std::cout << "hero turn passed" << std::endl;
-                    //}
-                    //goblin.canSeeHero();
-                    
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) and floor->canMoveTo(heroPos, down)) {
                     triedToMove = true;
                     heroMoved = hero->move(down);
-                    //if (not hero->move(down) and not hero->canMove()) {
-                    //    hero->turnPassed();
-                    //    state = ENEMY_TURN;
-                    //    std::cout << "hero turn passed" << std::endl;
-                    //}
-                    //goblin.canSeeHero();
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) and floor->canMoveTo(heroPos, left)) {
                     triedToMove = true;
                     heroMoved = hero->move(left);
-                    //if (not hero->move(left) and not hero->canMove()) {
-                    //    hero->turnPassed();
-                    //    state = ENEMY_TURN;
-                    //    std::cout << "hero turn passed" << std::endl;
-                    //}
-                    //goblin.canSeeHero();
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) and floor->canMoveTo(heroPos, right)) {
                     triedToMove = true;
                     heroMoved = hero->move(right);
-                    //if (not hero->move(right) and not hero->canMove()) {
-                    //    hero->turnPassed();
-                    //    state = ENEMY_TURN;
-                    //    std::cout << "hero turn passed" << std::endl;
-                    //}
-                    //goblin.canSeeHero();
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
                     triedToMove = true;
                     skippedTurn = true;
-                    //hero->turnPassed();
-                    //state = ENEMY_TURN;
-                    //std::cout << "hero turn passed" << std::endl;
-                    //goblin.canSeeHero();
                 }
                 if (heroMoved) {
-                    goblin.canSeeHero();
+                    enemyManager->canSeeHero();
                 }
                 else if ((triedToMove and not hero->canMove()) or skippedTurn) {
                     hero->turnPassed();
                     state = ENEMY_TURN;
                     std::cout << "hero turn passed" << std::endl;
                 }
-
-
                 break;
             case ENEMY_TURN:
-                goblin.takeTurn();
+                enemyManager->takeTurn();
                 state = HERO_TURN;
 
         }
@@ -139,18 +120,23 @@ int main()
         sf::Sprite heroSprite;
         heroSprite.setTexture(hero->getTexture());
         heroSprite.setPosition(middlePos, middlePos);
-
-        sf::Sprite goblinSprite;
-        goblinSprite.setTexture(goblin.getTexture());
-        sf::Vector2i toHero = hero->getPosition() - goblin.getPosition();
-        goblinSprite.setPosition(middlePos - toHero.x * 75, middlePos - toHero.y * 75);
         
 
         
 
         window.draw(mazeSprite);
         window.draw(heroSprite);
-        window.draw(goblinSprite);
+
+        std::vector<std::pair<sf::Vector2i, sf::Texture&>> enemyTextures = enemyManager->getEnemyTextures();
+        for (std::pair<sf::Vector2i, sf::Texture&> posAndTexture : enemyTextures) {
+            sf::Sprite sprite;
+            sprite.setTexture(posAndTexture.second);
+            sf::Vector2i toHero = hero->getPosition() - posAndTexture.first;
+            sprite.setPosition(middlePos - toHero.x * 75, middlePos - toHero.y * 75);
+            window.draw(sprite);
+        }
+
+        
         window.display();
     }
     

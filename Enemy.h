@@ -3,6 +3,8 @@
 #include <vector>
 #include "Floor.h"
 
+class Floor;
+
 class Enemy {
 	public:
 		virtual void takeTurn() = 0;
@@ -10,6 +12,8 @@ class Enemy {
 		sf::Texture& getTexture();
 		sf::Vector2i getPosition();
 		bool canSeeHero();
+		bool canMove();
+		bool isDead();
 		
 	protected:
 		sf::Texture texture;
@@ -19,6 +23,15 @@ class Enemy {
 		int vision;
 		void moveBy(sf::Vector2i moveBy);
 		void moveTo(sf::Vector2i moveTo);
+
+		float speed;
+		float maxEnergy;
+		float currEnergy;
+
+
+		int currentHp;
+		int maxHp;
+		int meeleDmg;
 	private:
 
 };

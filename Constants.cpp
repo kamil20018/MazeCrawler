@@ -26,4 +26,8 @@ namespace utils{
     void printVector(std::string prefix, sf::Vector2i vec) {
         std::cout << prefix << "x: " << vec.x << " y: " << vec.y << std::endl;
     }
+
+    int vectorDistance(sf::Vector2i vec1, sf::Vector2i vec2) {
+        return std::abs(vec1.x - vec2.x) + std::abs(vec2.y - vec2.y);
+    }
 }

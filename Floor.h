@@ -5,10 +5,13 @@
 #include <iostream>
 #include "Hero.h"
 #include "Constants.h"
+#include "EnemyManager.h"
+
+class EnemyManager;
 
 class Floor {
 	public:
-		Floor(int width, int height, std::shared_ptr<Hero> hero);
+		Floor(int width, int height, std::shared_ptr<Hero> hero, std::shared_ptr<EnemyManager> enemyManager);
 		sf::Vector2i entrance;
 		sf::Vector2i exit;
 		const sf::Texture& getTexture();
@@ -29,5 +32,6 @@ class Floor {
 		int height;
 		int visibility;
 		std::shared_ptr<Hero> hero;
+		std::shared_ptr<EnemyManager> enemyManager;
 		void getVisibleNeighbours(int depth, sf::Vector2i previousCell, sf::Vector2i currentCell, std::vector<sf::Vector2i>& visibleNeighbours);
 };

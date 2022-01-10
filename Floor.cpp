@@ -1,11 +1,11 @@
 #include "Floor.h"
 
-Floor::Floor(int width, int height, std::shared_ptr<Hero> hero) {
+Floor::Floor(int width, int height, std::shared_ptr<Hero> hero, std::shared_ptr<EnemyManager> enemyManager) {
 	this->width = width;
 	this->height = height;
     this->visibility = 3;
     this->hero = hero;
-    
+    this->enemyManager = enemyManager;
 
     //std::cout << *hero. << std::endl;
 	std::vector<std::vector<bool>> hozWalls(height, std::vector<bool>(width + 1, true));
@@ -155,7 +155,6 @@ const sf::Texture& Floor::getTexture() {
     this->renderTexture.display();
     return this->renderTexture.getTexture();
 }
-
 
 void Floor::getVisibleNeighbours(int depth, sf::Vector2i previousCell, sf::Vector2i currentCell, std::vector<sf::Vector2i>& visibleNeighbours) {
 

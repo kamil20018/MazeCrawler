@@ -8,11 +8,15 @@ Goblin::Goblin(sf::Vector2i initPos, std::shared_ptr<Floor> floor) : Enemy(initP
 
 void Goblin::takeTurn() {
 	if (canSeeHero()) {
-		sf::Vector2i moveBy = this->pathToHero[0] - this->position;
-		move(moveBy);
-		std::cout << "took turn" << std::endl;
+		moveTo(pathToHero[0]);
+		std::cout << "goblin moved by vision" << std::endl;
 	}
-
+	else if (pathToHero.size() > 0) {
+		moveTo(pathToHero[0]);
+		pathToHero.erase(pathToHero.begin());
+		std::cout << "goblin moved by memory" << std::endl;
+	}
+	std::cout << "goblin took turn" << std::endl;
 }
 
 void Goblin::setTexture() {

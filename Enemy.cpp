@@ -24,6 +24,10 @@ bool Enemy::canSeeHero() {
 	return false;
 }
 
-void Enemy::move(sf::Vector2i moveBy) {
+void Enemy::moveBy(sf::Vector2i moveBy) {
 	this->position += moveBy;
+}
+
+void Enemy::moveTo(sf::Vector2i moveTo) {
+	this->position = moveTo;
 }

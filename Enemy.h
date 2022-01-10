@@ -17,7 +17,8 @@ class Enemy {
 		std::shared_ptr<Floor> floor;
 		std::vector<sf::Vector2i> pathToHero;
 		int vision;
-		void move(sf::Vector2i moveBy);
+		void moveBy(sf::Vector2i moveBy);
+		void moveTo(sf::Vector2i moveTo);
 	private:
 
 };

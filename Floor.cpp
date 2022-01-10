@@ -18,7 +18,8 @@ Floor::Floor(int width, int height, std::shared_ptr<Hero> hero) {
     this->entrance = sf::Vector2i(rand() % (width / 5), rand() % (height / 5));
     this->exit = sf::Vector2i(width * 4 / 5 + rand() % (width / 5), height * 4 / 5 + rand() % (height / 5));
     sf::Vector2i moveBy = this->entrance - this->hero->getPosition();
-    this->hero->move(moveBy); // shift hero to the entrance position
+    //this->hero->move(moveBy); // shift hero to the entrance position
+    this->hero->setPosition(this->entrance);
     generateMaze(this->entrance);
 
 }

@@ -163,13 +163,42 @@ void Floor::getVisibleNeighbours(int depth, sf::Vector2i previousCell, sf::Vecto
         return;
     }
     for (sf::Vector2i dir : dirs) {
-        if (canMoveTo(currentCell, dir) and currentCell + dir != previousCell) {
+        if (isPathTo(currentCell, dir) and currentCell + dir != previousCell) {
             getVisibleNeighbours(depth + 1, currentCell, currentCell + dir, visibleNeighbours);
         }
     }
 }
 
 bool Floor::canMoveTo(sf::Vector2i startPos, sf::Vector2i dir) {
+    if (not isPathTo(startPos, dir)) return false;
+
+
+
+    sf::Vector2i destination = startPos + dir;
+    std::vector<sf::Vector2i> enemyPositions = enemyManager->getEnemyPositions();
+    if (utils::isInVector(destination, enemyPositions) or destination == hero->getPosition() or not vectorInBounds(destination)) {
+        return false;
+    }
+
+    //if (dir.x != 0) {
+    //    if (dir.x == -1) {
+    //        return not horizontalWalls[startPos.y][startPos.x];
+    //    }
+    //    else if (dir.x == 1) {
+    //        return not horizontalWalls[startPos.y][startPos.x + 1];
+    //    }
+    //}
+    //else {
+    //    if (dir.y == -1) {
+    //        return not verticalWalls[startPos.y][startPos.x];
+    //    }
+    //    else if (dir.y == 1) {
+    //        return not verticalWalls[startPos.y + 1][startPos.x];
+    //    }
+    //}
+}
+
+bool Floor::isPathTo(sf::Vector2i startPos, sf::Vector2i dir) {
 
     sf::Vector2i destination = startPos + dir;
     if (not vectorInBounds(destination)) return false;
@@ -192,6 +221,8 @@ bool Floor::canMoveTo(sf::Vector2i startPos, sf::Vector2i dir) {
 }
 
 
+
+
 sf::Vector2i Floor::getHeroPos() {
     return this->hero->getPosition();
 }
@@ -205,7 +236,7 @@ std::vector<sf::Vector2i> Floor::getPath(sf::Vector2i start, sf::Vector2i end) {
         std::vector<sf::Vector2i> possibleDirections;
         for (sf::Vector2i dir : dirs) {
             sf::Vector2i testPos = currentCell + dir;
-            if (vectorInBounds(testPos) and canMoveTo(currentCell, dir) and not visitedCells[testPos.y][testPos.x]) {
+            if (vectorInBounds(testPos) and isPathTo(currentCell, dir) and not visitedCells[testPos.y][testPos.x]) {
                 possibleDirections.push_back(testPos);
             }
         }

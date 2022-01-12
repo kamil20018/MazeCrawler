@@ -3,9 +3,10 @@
 
 Goblin::Goblin(sf::Vector2i initPos, std::shared_ptr<Floor> floor) : Enemy(initPos, floor) {
 	setTexture();
-	meeleDmg = 10;
-	currentHp = 50;
-	maxHp = 50;
+	this->meeleDmg = 10;
+	this->currentHp = 50;
+	this->maxHp = 50;
+	this->xpOnDeath = 20;
 }
 
 

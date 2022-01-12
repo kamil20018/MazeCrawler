@@ -14,6 +14,8 @@ class Enemy {
 		bool canSeeHero();
 		bool canMove();
 		bool isDead();
+		void takeDamage(float damage);
+		float getXpOnDeath();
 		
 	protected:
 		sf::Texture texture;
@@ -28,10 +30,11 @@ class Enemy {
 		float maxEnergy;
 		float currEnergy;
 
+		float xpOnDeath;
 
-		int currentHp;
-		int maxHp;
-		int meeleDmg;
+		float currentHp;
+		float maxHp;
+		float meeleDmg;
 	private:
 
 };

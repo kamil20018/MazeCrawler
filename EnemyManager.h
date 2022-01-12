@@ -13,10 +13,13 @@ class EnemyManager {
 		void addEnemy(std::shared_ptr<Enemy> enemy);
 		void takeTurn();
 		void canSeeHero();
-		
+		void damageEnemyAt(sf::Vector2i position, float damage);
+		bool isEnemyAt(sf::Vector2i position);
+		void removeDead();
+		std::tuple<float> getLootFromDead();
 		std::vector<std::pair<sf::Vector2i, sf::Texture&>> getEnemyTextures();
 		std::vector<sf::Vector2i> getEnemyPositions();
 	private:
 		std::vector<std::shared_ptr<Enemy>> enemyList;
-		void removeDead();
+
 };

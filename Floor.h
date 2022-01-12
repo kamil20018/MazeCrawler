@@ -8,7 +8,7 @@
 #include "EnemyManager.h"
 
 class EnemyManager;
-
+class Hero;
 class Floor {
 	public:
 		Floor(int width, int height, std::shared_ptr<Hero> hero, std::shared_ptr<EnemyManager> enemyManager);

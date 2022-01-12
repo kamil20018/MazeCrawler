@@ -34,8 +34,9 @@ int main()
 {
     States state = HERO_TURN;
 
-    std::shared_ptr<Hero> hero = std::make_shared<Hero>(sf::Vector2i(1, 1));
+
     std::shared_ptr<EnemyManager> enemyManager = std::make_shared<EnemyManager>();
+    std::shared_ptr<Hero> hero = std::make_shared<Hero>(sf::Vector2i(1, 1), enemyManager);
     std::shared_ptr<Floor> floor = std::make_shared<Floor>(15, 15, hero, enemyManager);
 
     std::shared_ptr<Goblin> goblin1 = std::make_shared<Goblin>(sf::Vector2i(3, 3), floor);
@@ -51,7 +52,7 @@ int main()
 
     //window init
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Cellular Automata");
-    window.setFramerateLimit(30);
+    window.setFramerateLimit(15);
 
     float middlePos = (float)(WINDOW_HEIGHT - 75) / 2;
 
@@ -64,45 +65,96 @@ int main()
             }
         }
         sf::Vector2i heroPos = hero->getPosition();
-        bool triedToMove = false;
-        bool heroMoved = false;
-        bool skippedTurn = false;
+        sf::Vector2i newPos;
+        sf::Vector2i movedBy(0, 0);
+
+        bool endTurn = false;
         switch (state) {
 
-            case HERO_TURN:
+            //case HERO_TURN:
+            //    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) and floor->canMoveTo(heroPos, up)) {
+            //        triedToMove = true;
+            //        heroMoved = hero->move(up);
+            //    }
+            //    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) and floor->canMoveTo(heroPos, down)) {
+            //        triedToMove = true;
+            //        heroMoved = hero->move(down);
+            //    }
+            //    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) and floor->canMoveTo(heroPos, left)) {
+            //        triedToMove = true;
+            //        heroMoved = hero->move(left);
+            //    }
+            //    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) and floor->canMoveTo(heroPos, right)) {
+            //        triedToMove = true;
+            //        heroMoved = hero->move(right);
+            //    }
+            //    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+            //        skippedTurn = true;
+            //    }
+            //    if (heroMoved) {
+            //        enemyManager->canSeeHero();
+            //    }
+            //    else if ((triedToMove and not hero->canMove()) or skippedTurn) {
+            //        hero->turnPassed();
+            //        state = ENEMY_TURN;
+            //        std::cout << "hero turn passed" << std::endl;
+            //    }
+            //    break;
+        case HERO_TURN:
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+                if (floor->canMoveTo(heroPos, up)) {
+                    hero->move(up);
+                }
+                movedBy = up;
+            }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+                if (floor->canMoveTo(heroPos, down)) {
+                    hero->move(down);
+                }
+                movedBy = down;
+                
+            }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+                if (floor->canMoveTo(heroPos, left)) {
+                    hero->move(left);
+                }
+                movedBy = left;
+            }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+                if (floor->canMoveTo(heroPos, right)) {
+                    hero->move(right);
+                }
+                movedBy = right;
+                
+            }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+                endTurn = true;
+            }
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) and floor->canMoveTo(heroPos, up)) {
-                    triedToMove = true;
-                    heroMoved = hero->move(up);
+            newPos = hero->getPosition();
+            if (heroPos == newPos) {
+                if (not hero->canMove()) { // if hero tried to move when he had no energy to move, we pass a turn
+                    endTurn = true;
                 }
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) and floor->canMoveTo(heroPos, down)) {
-                    triedToMove = true;
-                    heroMoved = hero->move(down);
+                else if (enemyManager->isEnemyAt(heroPos + movedBy) and floor->isPathTo(heroPos, movedBy)) {
+                    utils::printVector("attacked an enemy at: ", heroPos + movedBy);
+                    hero->meeleAttack(heroPos + movedBy);
                 }
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) and floor->canMoveTo(heroPos, left)) {
-                    triedToMove = true;
-                    heroMoved = hero->move(left);
-                }
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) and floor->canMoveTo(heroPos, right)) {
-                    triedToMove = true;
-                    heroMoved = hero->move(right);
-                }
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-                    triedToMove = true;
-                    skippedTurn = true;
-                }
-                if (heroMoved) {
-                    enemyManager->canSeeHero();
-                }
-                else if ((triedToMove and not hero->canMove()) or skippedTurn) {
-                    hero->turnPassed();
-                    state = ENEMY_TURN;
-                    std::cout << "hero turn passed" << std::endl;
-                }
-                break;
-            case ENEMY_TURN:
-                enemyManager->takeTurn();
-                state = HERO_TURN;
+            }
+            else {
+                enemyManager->canSeeHero();
+            }
+
+            if (endTurn) {
+                hero->turnPassed();
+                state = ENEMY_TURN;
+                std::cout << "hero turn passed" << std::endl;
+            }
+
+            break;
+        case ENEMY_TURN:
+            enemyManager->takeTurn();
+            state = HERO_TURN;
 
         }
         

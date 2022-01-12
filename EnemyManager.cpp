@@ -16,6 +16,17 @@ void EnemyManager::removeDead() {
 	}
 }
 
+std::tuple<float> EnemyManager::getLootFromDead() { //it returns a tuple, cause enemies will drop items etc later on
+	float totalXpGain = 0;
+	for (std::shared_ptr enemy : this->enemyList) {
+		if (enemy->isDead()) {
+			totalXpGain += enemy->getXpOnDeath();
+		}
+	}
+	std::tuple<float> output = std::make_tuple(totalXpGain);
+	return output;
+}
+
 void EnemyManager::takeTurn() {
 	for (std::shared_ptr<Enemy> enemy : this->enemyList) {
 		enemy->takeTurn();
@@ -36,10 +47,23 @@ std::vector<std::pair<sf::Vector2i, sf::Texture&>> EnemyManager::getEnemyTexture
 	}
 	return enemyTextures;
 }
+
 std::vector<sf::Vector2i> EnemyManager::getEnemyPositions() {
 	std::vector<sf::Vector2i> enemyPositions;
 	for (std::shared_ptr<Enemy> enemy : this->enemyList) {
 		enemyPositions.push_back(enemy->getPosition());
 	}
 	return enemyPositions;
+}
+
+void EnemyManager::damageEnemyAt(sf::Vector2i position, float damage) {
+	for (std::shared_ptr<Enemy> enemy : this->enemyList) {
+		if (enemy->getPosition() == position) {
+			enemy->takeDamage(damage);
+		}
+	}
+}
+
+bool EnemyManager::isEnemyAt(sf::Vector2i position) {
+	return utils::isInVector(position, getEnemyPositions());
 }

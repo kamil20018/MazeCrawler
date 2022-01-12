@@ -1,9 +1,11 @@
 #include "Hero.h"
 
-Hero::Hero(sf::Vector2i initPos) {
+Hero::Hero(sf::Vector2i initPos, std::shared_ptr<EnemyManager> enemyManager) {
 	this->currHp = 100;
 	this->maxHp = 100;
 	this->level = 1;
+	this->meeleDmg = 10.0;
+	this->meeleAttackEnergy = 20.0;
 	this->xpToNextLevel = 100;
 	this->currXp = 0;
 	this->position = initPos;
@@ -11,6 +13,7 @@ Hero::Hero(sf::Vector2i initPos) {
 	this->currEnergy = 100;
 	this->speed = 3.3;
 	this->lastMoved = sf::seconds(-1.01f);;
+	this->enemyManager = enemyManager;
 	setTexture();
 }
 
@@ -58,4 +61,24 @@ void Hero::setPosition(sf::Vector2i position) {
 bool Hero::canMove() {
 	float moveEnergy = 100.0 / this->speed;
 	return this->currEnergy > moveEnergy;
+}
+
+void Hero::addXp(float xp) {
+	this->currXp += xp;
+	std::cout << "got xp" << std::endl;
+	if (xp > this->xpToNextLevel) levelUp();
+}
+
+void Hero::levelUp() {
+
+}
+
+void Hero::meeleAttack(sf::Vector2i position) {
+	if (this->currEnergy > this->meeleAttackEnergy and this->enemyManager->isEnemyAt(position)) {
+		this->enemyManager->damageEnemyAt(position, this->meeleDmg);
+		this->currEnergy -= this->meeleAttackEnergy;
+		std::tuple<float> loot = this->enemyManager->getLootFromDead();
+		addXp(std::get<0>(loot));
+		this->enemyManager->removeDead();
+	}
 }

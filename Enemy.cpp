@@ -4,8 +4,8 @@ Enemy::Enemy(sf::Vector2i position, std::shared_ptr<Floor> floor) {
 	this->position = position;
 	this->floor = floor;
 	this->vision = 3;
-	this->maxEnergy = 100;
-	this->currEnergy = 100;
+	this->maxEnergy = 100.0;
+	this->currEnergy = 100.0;
 	this->speed = 2.3;
 }
 
@@ -15,6 +15,10 @@ sf::Texture& Enemy::getTexture() {
 
 sf::Vector2i Enemy::getPosition() {
 	return this->position;
+}
+
+float Enemy::getXpOnDeath() {
+	return this->xpOnDeath;
 }
 
 bool Enemy::canSeeHero() {
@@ -45,4 +49,9 @@ bool Enemy::canMove() {
 
 bool Enemy::isDead() {
 	return this->currentHp < 0;
+}
+
+void Enemy::takeDamage(float damage) {
+	this->currentHp -= damage;
+	std::cout << "took damage, current hp: " << this->currentHp << std::endl;
 }

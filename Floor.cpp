@@ -171,31 +171,11 @@ void Floor::getVisibleNeighbours(int depth, sf::Vector2i previousCell, sf::Vecto
 
 bool Floor::canMoveTo(sf::Vector2i startPos, sf::Vector2i dir) {
     if (not isPathTo(startPos, dir)) return false;
-
-
-
     sf::Vector2i destination = startPos + dir;
     std::vector<sf::Vector2i> enemyPositions = enemyManager->getEnemyPositions();
     if (utils::isInVector(destination, enemyPositions) or destination == hero->getPosition() or not vectorInBounds(destination)) {
         return false;
     }
-
-    //if (dir.x != 0) {
-    //    if (dir.x == -1) {
-    //        return not horizontalWalls[startPos.y][startPos.x];
-    //    }
-    //    else if (dir.x == 1) {
-    //        return not horizontalWalls[startPos.y][startPos.x + 1];
-    //    }
-    //}
-    //else {
-    //    if (dir.y == -1) {
-    //        return not verticalWalls[startPos.y][startPos.x];
-    //    }
-    //    else if (dir.y == 1) {
-    //        return not verticalWalls[startPos.y + 1][startPos.x];
-    //    }
-    //}
 }
 
 bool Floor::isPathTo(sf::Vector2i startPos, sf::Vector2i dir) {
@@ -219,8 +199,6 @@ bool Floor::isPathTo(sf::Vector2i startPos, sf::Vector2i dir) {
         }
     }
 }
-
-
 
 
 sf::Vector2i Floor::getHeroPos() {

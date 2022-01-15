@@ -39,14 +39,6 @@ void EnemyManager::canSeeHero() {
 	}
 }
 
-std::vector<std::pair<sf::Vector2i, sf::Texture&>> EnemyManager::getEnemyTextures() {
-	std::vector<std::pair<sf::Vector2i, sf::Texture&>> enemyTextures;
-	for (std::shared_ptr<Enemy> enemy : this->enemyList) {
-		std::pair<sf::Vector2i, sf::Texture&> pair(enemy->getPosition(), enemy->getTexture());
-		enemyTextures.push_back(pair);
-	}
-	return enemyTextures;
-}
 
 std::vector<sf::Vector2i> EnemyManager::getEnemyPositions() {
 	std::vector<sf::Vector2i> enemyPositions;
@@ -66,4 +58,7 @@ void EnemyManager::damageEnemyAt(sf::Vector2i position, float damage) {
 
 bool EnemyManager::isEnemyAt(sf::Vector2i position) {
 	return utils::isInVector(position, getEnemyPositions());
+}
+std::vector<std::shared_ptr<Enemy>> EnemyManager::getEnemyList() {
+	return this->enemyList;
 }

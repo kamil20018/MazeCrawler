@@ -14,7 +14,7 @@
 #include "Enemy.h"
 #include "Goblin.h"
 #include "EnemyManager.h"
-
+#include "HeroStatus.h"
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 800;
 
@@ -37,14 +37,15 @@ int main()
 
     std::shared_ptr<EnemyManager> enemyManager = std::make_shared<EnemyManager>();
     std::shared_ptr<Hero> hero = std::make_shared<Hero>(sf::Vector2i(1, 1), enemyManager);
-    std::shared_ptr<Floor> floor = std::make_shared<Floor>(15, 15, hero, enemyManager);
+    std::shared_ptr<Floor> floor = std::make_shared<Floor>(10, 10, hero, enemyManager);
 
     std::shared_ptr<Goblin> goblin1 = std::make_shared<Goblin>(sf::Vector2i(3, 3), floor);
     std::shared_ptr<Goblin> goblin2 = std::make_shared<Goblin>(sf::Vector2i(3, 5), floor);
     std::shared_ptr<Goblin> goblin3 = std::make_shared<Goblin>(sf::Vector2i(3, 7), floor);
 
-
-
+    //HeroStatus heroStatus();
+    HeroData heroData = hero->getHeroData();
+    HeroStatus heroStatus(&heroData);
     //EnemyManager enemyManager;
     enemyManager->addEnemy(goblin1);
     enemyManager->addEnemy(goblin2);
@@ -53,7 +54,7 @@ int main()
     //window init
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Cellular Automata");
     window.setFramerateLimit(15);
-
+    window.setKeyRepeatEnabled(false);
     float middlePos = (float)(WINDOW_HEIGHT - 75) / 2;
 
     //app loop
@@ -69,47 +70,21 @@ int main()
         sf::Vector2i movedBy(0, 0);
 
         bool endTurn = false;
+        bool moved = false;
         switch (state) {
 
-            //case HERO_TURN:
-            //    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) and floor->canMoveTo(heroPos, up)) {
-            //        triedToMove = true;
-            //        heroMoved = hero->move(up);
-            //    }
-            //    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) and floor->canMoveTo(heroPos, down)) {
-            //        triedToMove = true;
-            //        heroMoved = hero->move(down);
-            //    }
-            //    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) and floor->canMoveTo(heroPos, left)) {
-            //        triedToMove = true;
-            //        heroMoved = hero->move(left);
-            //    }
-            //    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) and floor->canMoveTo(heroPos, right)) {
-            //        triedToMove = true;
-            //        heroMoved = hero->move(right);
-            //    }
-            //    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-            //        skippedTurn = true;
-            //    }
-            //    if (heroMoved) {
-            //        enemyManager->canSeeHero();
-            //    }
-            //    else if ((triedToMove and not hero->canMove()) or skippedTurn) {
-            //        hero->turnPassed();
-            //        state = ENEMY_TURN;
-            //        std::cout << "hero turn passed" << std::endl;
-            //    }
-            //    break;
         case HERO_TURN:
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
                 if (floor->canMoveTo(heroPos, up)) {
                     hero->move(up);
+                    moved = true;
                 }
                 movedBy = up;
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
                 if (floor->canMoveTo(heroPos, down)) {
                     hero->move(down);
+                    moved = true;
                 }
                 movedBy = down;
                 
@@ -117,12 +92,14 @@ int main()
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
                 if (floor->canMoveTo(heroPos, left)) {
                     hero->move(left);
+                    moved = true;
                 }
                 movedBy = left;
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
                 if (floor->canMoveTo(heroPos, right)) {
                     hero->move(right);
+                    moved = true;
                 }
                 movedBy = right;
                 
@@ -133,7 +110,7 @@ int main()
 
             newPos = hero->getPosition();
             if (heroPos == newPos) {
-                if (not hero->canMove()) { // if hero tried to move when he had no energy to move, we pass a turn
+                if (not hero->canMove() and not moved) { // if hero tried to move when he had no energy to move, we pass a turn
                     endTurn = true;
                 }
                 else if (enemyManager->isEnemyAt(heroPos + movedBy) and floor->isPathTo(heroPos, movedBy)) {
@@ -174,20 +151,12 @@ int main()
         heroSprite.setPosition(middlePos, middlePos);
         
 
-        
-
         window.draw(mazeSprite);
         window.draw(heroSprite);
-
-        std::vector<std::pair<sf::Vector2i, sf::Texture&>> enemyTextures = enemyManager->getEnemyTextures();
-        for (std::pair<sf::Vector2i, sf::Texture&> posAndTexture : enemyTextures) {
-            sf::Sprite sprite;
-            sprite.setTexture(posAndTexture.second);
-            sf::Vector2i toHero = hero->getPosition() - posAndTexture.first;
-            sprite.setPosition(middlePos - toHero.x * 75, middlePos - toHero.y * 75);
-            window.draw(sprite);
+        for (std::shared_ptr enemy : enemyManager->getEnemyList()) {
+            window.draw(*enemy);
         }
-
+        window.draw(heroStatus);
         
         window.display();
     }

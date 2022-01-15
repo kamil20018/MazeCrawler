@@ -4,6 +4,7 @@
 #include <iostream>
 #include <math.h>
 #include "EnemyManager.h"
+#include "Constants.h"
 
 class EnemyManager;
 
@@ -19,19 +20,22 @@ class Hero {
 		void meeleAttack(sf::Vector2i position);
 		void addXp(float xp);
 		void levelUp();
+		HeroData getHeroData();
 
-	private:
-		int currHp;
-		int maxHp;
+	protected:
+		float currHp;
+		float maxHp;
 
 		int level;
 
-		int currXp;
-		int xpToNextLevel;
+		float currXp;
+		float xpToNextLevel;
 
 		float speed;
-		float maxEnergy;
+
 		float currEnergy;
+		float maxEnergy;
+
 
 		float meeleDmg;
 		float meeleAttackEnergy;

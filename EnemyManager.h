@@ -17,8 +17,8 @@ class EnemyManager {
 		bool isEnemyAt(sf::Vector2i position);
 		void removeDead();
 		std::tuple<float> getLootFromDead();
-		std::vector<std::pair<sf::Vector2i, sf::Texture&>> getEnemyTextures();
 		std::vector<sf::Vector2i> getEnemyPositions();
+		std::vector<std::shared_ptr<Enemy>> getEnemyList();
 	private:
 		std::vector<std::shared_ptr<Enemy>> enemyList;
 

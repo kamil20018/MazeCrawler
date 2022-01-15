@@ -27,6 +27,7 @@ void Goblin::takeTurn() {
 			std::cout << "goblin moved by memory" << std::endl;
 		}
 	}
+	canSeeHero();
 	std::cout << "goblin took turn" << std::endl;
 
 	this->currEnergy = maxEnergy;
@@ -34,7 +35,7 @@ void Goblin::takeTurn() {
 
 void Goblin::setTexture() {
 	sf::Texture texture;
-	if (!texture.loadFromFile("Resources/Goblin.png")) {
+	if (!texture.loadFromFile("Resources/Textures/Goblin.png")) {
 		std::cout << "you fucked up" << std::endl;
 	}
 	this->texture = texture;

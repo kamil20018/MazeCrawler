@@ -14,9 +14,11 @@ std::map <std::string, sf::Color> colors = {
     {"blue", sf::Color::Blue},
     {"white", sf::Color::White},
     {"black", sf::Color::Black},
+    {"yellow", sf::Color::Yellow},
     {"dark_grey", sf::Color(20, 20, 20)},
     {"medium_grey", sf::Color(30, 30, 30)}
 };
+
 
 namespace utils{
     void printVector(sf::Vector2i vec) {

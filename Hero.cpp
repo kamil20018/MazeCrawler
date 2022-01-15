@@ -1,31 +1,29 @@
 #include "Hero.h"
 
 Hero::Hero(sf::Vector2i initPos, std::shared_ptr<EnemyManager> enemyManager) {
-	this->currHp = 100;
-	this->maxHp = 100;
+	this->currHp = 100.0;
+	this->maxHp = 100.0;
 	this->level = 1;
 	this->meeleDmg = 10.0;
 	this->meeleAttackEnergy = 20.0;
-	this->xpToNextLevel = 100;
+	this->xpToNextLevel = 100.0;
 	this->currXp = 0;
 	this->position = initPos;
-	this->maxEnergy = 100;
-	this->currEnergy = 100;
+	this->maxEnergy = 100.0;
+	this->currEnergy = 100.0;
 	this->speed = 3.3;
 	this->lastMoved = sf::seconds(-1.01f);;
 	this->enemyManager = enemyManager;
 	setTexture();
 }
 
-
 sf::Texture& Hero::getTexture() {
 	return this->texture;
 }
 
-
 void Hero::setTexture () {
 	sf::Texture texture;
-	if (!texture.loadFromFile("Resources/Hero.png")) {
+	if (!texture.loadFromFile("Resources/Textures/Hero.png")) {
 		std::cout << "you fucked up" << std::endl;
 	}
 	this->texture = texture;
@@ -65,7 +63,10 @@ bool Hero::canMove() {
 
 void Hero::addXp(float xp) {
 	this->currXp += xp;
-	std::cout << "got xp" << std::endl;
+	if (xp > 0.0000001) {
+		std::cout << "got xp" << std::endl;
+	}
+	
 	if (xp > this->xpToNextLevel) levelUp();
 }
 
@@ -81,4 +82,9 @@ void Hero::meeleAttack(sf::Vector2i position) {
 		addXp(std::get<0>(loot));
 		this->enemyManager->removeDead();
 	}
+}
+
+HeroData Hero::getHeroData() {
+	HeroData data = { this->level, this->currHp, this->maxHp, this->currXp, this->xpToNextLevel, this->currEnergy, this->maxEnergy};
+	return data;
 }

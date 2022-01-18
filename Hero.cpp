@@ -1,6 +1,7 @@
 #include "Hero.h"
 
-Hero::Hero(sf::Vector2i initPos, std::shared_ptr<EnemyManager> enemyManager) {
+Hero::Hero(sf::Vector2i initPos, std::shared_ptr<EnemyManager> enemyManager, const sf::Texture& texture) {
+	this->texture = texture;
 	this->currHp = 100.0;
 	this->maxHp = 100.0;
 	this->level = 1;
@@ -11,27 +12,19 @@ Hero::Hero(sf::Vector2i initPos, std::shared_ptr<EnemyManager> enemyManager) {
 	this->position = initPos;
 	this->maxEnergy = 100.0;
 	this->currEnergy = 100.0;
-	this->speed = 3.3;
+	this->speed = 3.3f;
 	this->lastMoved = sf::seconds(-1.01f);;
 	this->enemyManager = enemyManager;
-	setTexture();
+	this->vision = 3;
 }
 
 sf::Texture& Hero::getTexture() {
 	return this->texture;
 }
 
-void Hero::setTexture () {
-	sf::Texture texture;
-	if (!texture.loadFromFile("Resources/Textures/Hero.png")) {
-		std::cout << "you fucked up" << std::endl;
-	}
-	this->texture = texture;
-}
-
 bool Hero::move(sf::Vector2i dir) {
 	sf::Time currTime = clock.getElapsedTime();
-	float moveEnergy = 100.0 / this->speed;
+	float moveEnergy = 100.0f / this->speed;
 	if ((currTime - lastMoved).asSeconds() > 0.15 and moveEnergy < this->currEnergy) {
 		this->currEnergy -= moveEnergy;
 		lastMoved = currTime;
@@ -48,6 +41,10 @@ sf::Vector2i Hero::getPosition() {
 	return this->position;
 }
 
+int Hero::getVision() {
+	return this->vision;
+}
+
 void Hero::turnPassed() {
 	this->currEnergy = this->maxEnergy;
 }
@@ -57,8 +54,13 @@ void Hero::setPosition(sf::Vector2i position) {
 }
 
 bool Hero::canMove() {
-	float moveEnergy = 100.0 / this->speed;
+	float moveEnergy = 100.0f / this->speed;
 	return this->currEnergy > moveEnergy;
+}
+
+bool Hero::canTakeAction() { // actions like spells / attacks will be added later
+	float moveEnergy = 100.0f / this->speed;
+	return this->currEnergy > moveEnergy or this->currEnergy > this->meeleAttackEnergy;
 }
 
 void Hero::addXp(float xp) {
@@ -84,7 +86,6 @@ void Hero::meeleAttack(sf::Vector2i position) {
 	}
 }
 
-HeroData Hero::getHeroData() {
-	HeroData data = { this->level, this->currHp, this->maxHp, this->currXp, this->xpToNextLevel, this->currEnergy, this->maxEnergy};
-	return data;
+HeroData* Hero::getHeroData() {
+	return &this->heroData;
 }

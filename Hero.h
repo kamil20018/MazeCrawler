@@ -10,23 +10,28 @@ class EnemyManager;
 
 class Hero {
 	public:
-		Hero(sf::Vector2i initPos, std::shared_ptr<EnemyManager> enemyManager);
+		Hero(sf::Vector2i initPos, std::shared_ptr<EnemyManager> enemyManager, const sf::Texture& texture);
 		sf::Texture& getTexture();
 		bool move(sf::Vector2i dir);
 		sf::Vector2i getPosition();
 		void turnPassed();
 		void setPosition(sf::Vector2i position);
+		int getVision();
 		bool canMove();
+		bool canTakeAction();
 		void meeleAttack(sf::Vector2i position);
 		void addXp(float xp);
 		void levelUp();
-		HeroData getHeroData();
+		//void addTexture(const sf::Texture& texture);
+		HeroData* getHeroData();
 
 	protected:
 		float currHp;
 		float maxHp;
 
 		int level;
+		int vision;
+
 
 		float currXp;
 		float xpToNextLevel;
@@ -41,9 +46,8 @@ class Hero {
 		float meeleAttackEnergy;
 		sf::Texture texture;
 		sf::Vector2i position;
-		void setTexture();
 		sf::Clock clock;
 		sf::Time lastMoved;
-
+		HeroData heroData = { this->level, this->currHp, this->maxHp, this->currXp, this->xpToNextLevel, this->currEnergy, this->maxEnergy };
 		std::shared_ptr<EnemyManager> enemyManager;
 };

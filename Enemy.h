@@ -10,11 +10,12 @@ class Enemy : public sf::Drawable {
 		virtual void takeTurn() = 0;
 		Enemy(sf::Vector2i position, std::shared_ptr<Floor> floor);
 		sf::Vector2i getPosition();
-		bool canSeeHero();
+		void updatePathToHero();
 		bool canMove();
 		bool isDead();
 		void takeDamage(float damage);
 		float getXpOnDeath();
+		void addTexture(const sf::Texture& texture);
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	protected:
 		sf::Texture texture;

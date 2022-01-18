@@ -10,6 +10,7 @@
 class EnemyManager;
 class Hero;
 class Floor {
+
 	public:
 		Floor(int width, int height, std::shared_ptr<Hero> hero, std::shared_ptr<EnemyManager> enemyManager);
 		sf::Vector2i entrance;
@@ -21,7 +22,6 @@ class Floor {
 		std::vector<sf::Vector2i> getPath(sf::Vector2i start, sf::Vector2i end);
 		bool isPathTo(sf::Vector2i startPos, sf::Vector2i dir);
 		
-
 	private:
 		std::vector<std::vector<bool>> horizontalWalls;
 		std::vector<std::vector<bool>> verticalWalls;
@@ -30,7 +30,6 @@ class Floor {
 		bool vectorInBounds(sf::Vector2i pos);
 		int width;
 		int height;
-		int visibility;
 		std::shared_ptr<Hero> hero;
 		std::shared_ptr<EnemyManager> enemyManager;
 		void getVisibleNeighbours(int depth, sf::Vector2i previousCell, sf::Vector2i currentCell, std::vector<sf::Vector2i>& visibleNeighbours);

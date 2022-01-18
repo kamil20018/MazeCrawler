@@ -17,14 +17,12 @@ float Enemy::getXpOnDeath() {
 	return this->xpOnDeath;
 }
 
-bool Enemy::canSeeHero() {
+void Enemy::updatePathToHero() {
 	std::vector<sf::Vector2i> path = floor->getPath(this->position, floor->getHeroPos());
 	if (path.size() - 2 <= this->vision) {
 		path.erase(path.begin());
 		this->pathToHero = path;
-		return true;
 	}
-	return false;
 }
 
 void Enemy::moveBy(sf::Vector2i moveBy) {
@@ -44,7 +42,7 @@ bool Enemy::canMove() {
 }
 
 bool Enemy::isDead() {
-	return this->currentHp < 0;
+	return this->currentHp < 0.1;
 }
 
 void Enemy::takeDamage(float damage) {
@@ -52,12 +50,14 @@ void Enemy::takeDamage(float damage) {
 	std::cout << "took damage, current hp: " << this->currentHp << std::endl;
 }
 
+void Enemy::addTexture(const sf::Texture& texture) {
+	this->texture = texture;
+}
 
 void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	int WINDOW_HEIGHT = 800;
 	float middlePos = (float)(WINDOW_HEIGHT - 75) / 2;
-	//target.draw(m_sprite, states);
 	sf::Sprite enemySprite;
 	enemySprite.setTexture(this->texture);
 

@@ -32,4 +32,8 @@ namespace utils{
     int vectorDistance(sf::Vector2i vec1, sf::Vector2i vec2) {
         return std::abs(vec1.x - vec2.x) + std::abs(vec2.y - vec2.y);
     }
+
+    bool isNonZero(sf::Vector2i vector) {
+        return vector != sf::Vector2i(0, 0);
+    }
 }

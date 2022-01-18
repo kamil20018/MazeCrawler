@@ -12,7 +12,7 @@ class EnemyManager {
 	public:
 		void addEnemy(std::shared_ptr<Enemy> enemy);
 		void takeTurn();
-		void canSeeHero();
+		void updatePathToHero();
 		void damageEnemyAt(sf::Vector2i position, float damage);
 		bool isEnemyAt(sf::Vector2i position);
 		void removeDead();

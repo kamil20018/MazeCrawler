@@ -33,9 +33,9 @@ void EnemyManager::takeTurn() {
 	}
 }
 
-void EnemyManager::canSeeHero() {
+void EnemyManager::updatePathToHero() {
 	for (std::shared_ptr<Enemy> enemy : this->enemyList) {
-		enemy->canSeeHero();
+		enemy->updatePathToHero();
 	}
 }
 

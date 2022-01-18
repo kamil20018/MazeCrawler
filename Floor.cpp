@@ -1,27 +1,26 @@
 #include "Floor.h"
 
 Floor::Floor(int width, int height, std::shared_ptr<Hero> hero, std::shared_ptr<EnemyManager> enemyManager) {
+    srand(time(NULL));
+
 	this->width = width;
 	this->height = height;
-    this->visibility = 3;
     this->hero = hero;
     this->enemyManager = enemyManager;
 
-    //std::cout << *hero. << std::endl;
 	std::vector<std::vector<bool>> hozWalls(height, std::vector<bool>(width + 1, true));
 	std::vector<std::vector<bool>> vertWalls(height + 1, std::vector<bool>(width, true));
     std::vector<std::vector<bool>> seenCells(height, std::vector<bool>(width, false));
+
 	this->horizontalWalls = hozWalls;
 	this->verticalWalls = vertWalls;
     this->seenCells = seenCells;
-    srand(time(NULL));
+
     this->entrance = sf::Vector2i(rand() % (width / 5), rand() % (height / 5));
     this->exit = sf::Vector2i(width * 4 / 5 + rand() % (width / 5), height * 4 / 5 + rand() % (height / 5));
-    sf::Vector2i moveBy = this->entrance - this->hero->getPosition();
-    //this->hero->move(moveBy); // shift hero to the entrance position
+
     this->hero->setPosition(this->entrance);
     generateMaze(this->entrance);
-
 }
 
 void Floor::generateMaze(sf::Vector2i entrance) {
@@ -82,9 +81,9 @@ bool Floor::vectorInBounds(sf::Vector2i pos) {
 
 const sf::Texture& Floor::getTexture() {
 
-    int CELL_SIZE = 75;
-    int WALL_SIZE = 5;
-    int OFFSET = 30;
+    float CELL_SIZE = 75.0f;
+    float WALL_SIZE = 5.0f;
+    float OFFSET = 30.0f;
 
     sf::RectangleShape cell(sf::Vector2f(CELL_SIZE, CELL_SIZE));
     sf::RectangleShape wallHoz(sf::Vector2f(WALL_SIZE, CELL_SIZE + 4));
@@ -92,8 +91,6 @@ const sf::Texture& Floor::getTexture() {
     wallHoz.setFillColor(sf::Color::Black);
     wallVer.setFillColor(sf::Color::Black);
     this->renderTexture.create(this->width * CELL_SIZE, this->height * CELL_SIZE);
-
-
 
     sf::RectangleShape visibleCell(sf::Vector2f(CELL_SIZE, CELL_SIZE));
     visibleCell.setFillColor(sf::Color::Blue);
@@ -159,7 +156,7 @@ const sf::Texture& Floor::getTexture() {
 void Floor::getVisibleNeighbours(int depth, sf::Vector2i previousCell, sf::Vector2i currentCell, std::vector<sf::Vector2i>& visibleNeighbours) {
 
     visibleNeighbours.push_back(currentCell);
-    if (depth == this->visibility) {
+    if (depth == this->hero->getVision()) {
         return;
     }
     for (sf::Vector2i dir : dirs) {
@@ -167,6 +164,7 @@ void Floor::getVisibleNeighbours(int depth, sf::Vector2i previousCell, sf::Vecto
             getVisibleNeighbours(depth + 1, currentCell, currentCell + dir, visibleNeighbours);
         }
     }
+
 }
 
 bool Floor::canMoveTo(sf::Vector2i startPos, sf::Vector2i dir) {
@@ -176,10 +174,10 @@ bool Floor::canMoveTo(sf::Vector2i startPos, sf::Vector2i dir) {
     if (utils::isInVector(destination, enemyPositions) or destination == hero->getPosition() or not vectorInBounds(destination)) {
         return false;
     }
+    return true;
 }
 
-bool Floor::isPathTo(sf::Vector2i startPos, sf::Vector2i dir) {
-
+bool Floor::isPathTo(sf::Vector2i startPos, sf::Vector2i dir) { // dir is supposed to be a unit vector
     sf::Vector2i destination = startPos + dir;
     if (not vectorInBounds(destination)) return false;
     if (dir.x != 0) {
@@ -199,7 +197,6 @@ bool Floor::isPathTo(sf::Vector2i startPos, sf::Vector2i dir) {
         }
     }
 }
-
 
 sf::Vector2i Floor::getHeroPos() {
     return this->hero->getPosition();

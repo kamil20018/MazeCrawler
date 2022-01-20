@@ -3,6 +3,7 @@
 #include <vector>
 #include "Floor.h"
 #include "Constants.h"
+#include "AttackListener.h"
 class Floor;
 
 class Enemy : public sf::Drawable {
@@ -14,6 +15,7 @@ class Enemy : public sf::Drawable {
 		bool canMove();
 		bool isDead();
 		void takeDamage(float damage);
+		void addAttackListener(std::shared_ptr<AttackListener> listener);
 		float getXpOnDeath();
 		void addTexture(const sf::Texture& texture);
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -21,6 +23,7 @@ class Enemy : public sf::Drawable {
 		sf::Texture texture;
 		sf::Vector2i position;
 		std::shared_ptr<Floor> floor;
+		std::shared_ptr<AttackListener> attackListener;
 		std::vector<sf::Vector2i> pathToHero;
 		int vision;
 		void moveBy(sf::Vector2i moveBy);
@@ -35,6 +38,7 @@ class Enemy : public sf::Drawable {
 		float currentHp;
 		float maxHp;
 		float meeleDmg;
+		float meeleEnergy;
 
 
 	private:

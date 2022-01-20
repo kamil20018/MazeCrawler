@@ -4,8 +4,6 @@ Enemy::Enemy(sf::Vector2i position, std::shared_ptr<Floor> floor) {
 	this->position = position;
 	this->floor = floor;
 	this->vision = 3;
-	this->maxEnergy = 100.0;
-	this->currEnergy = 100.0;
 	this->speed = 2.3f;
 }
 
@@ -19,10 +17,14 @@ float Enemy::getXpOnDeath() {
 
 void Enemy::updatePathToHero() {
 	std::vector<sf::Vector2i> path = floor->getPath(this->position, floor->getHeroPos());
-	if (path.size() - 2 <= this->vision) {
+	if (path.size() - 1 <= this->vision) {
 		path.erase(path.begin());
 		this->pathToHero = path;
 	}
+}
+
+void Enemy::addAttackListener(std::shared_ptr<AttackListener> listener) {
+	this->attackListener = listener;
 }
 
 void Enemy::moveBy(sf::Vector2i moveBy) {

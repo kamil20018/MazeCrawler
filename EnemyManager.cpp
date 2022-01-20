@@ -4,6 +4,10 @@ void EnemyManager::addEnemy(std::shared_ptr<Enemy> enemy) {
 	this->enemyList.push_back(enemy);
 }
 
+void EnemyManager::setEnemyList(std::vector<std::shared_ptr<Enemy>> enemyList) {
+	this->enemyList = enemyList;
+}
+
 void EnemyManager::removeDead() {
 	std::vector<int> deadEnemies;
 	for (int i = this->enemyList.size() - 1; i >= 0; i--) {
@@ -61,4 +65,10 @@ bool EnemyManager::isEnemyAt(sf::Vector2i position) {
 }
 std::vector<std::shared_ptr<Enemy>> EnemyManager::getEnemyList() {
 	return this->enemyList;
+}
+
+void EnemyManager::setAttackListener(std::shared_ptr<AttackListener> listener) {
+	for (std::shared_ptr<Enemy> enemy : this->enemyList) {
+		enemy->addAttackListener(listener);
+	}
 }

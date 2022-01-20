@@ -45,6 +45,7 @@ class GamePlay : public State
         std::shared_ptr<Hero> hero;
         std::shared_ptr<Floor> floor;
         std::shared_ptr<HeroStatus> heroStatus;
+        std::shared_ptr<AttackListener> attackListener;
         float middlePos;
         States state;
         sf::Vector2i moveDir;

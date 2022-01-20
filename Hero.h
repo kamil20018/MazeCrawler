@@ -6,11 +6,11 @@
 #include "EnemyManager.h"
 #include "Constants.h"
 
-class EnemyManager;
+class AttackListener;
 
 class Hero {
 	public:
-		Hero(sf::Vector2i initPos, std::shared_ptr<EnemyManager> enemyManager, const sf::Texture& texture);
+		Hero(sf::Vector2i initPos, const sf::Texture& texture);
 		sf::Texture& getTexture();
 		bool move(sf::Vector2i dir);
 		sf::Vector2i getPosition();
@@ -22,7 +22,10 @@ class Hero {
 		void meeleAttack(sf::Vector2i position);
 		void addXp(float xp);
 		void levelUp();
-		//void addTexture(const sf::Texture& texture);
+		void takeDamage(float damage);
+		void setAttackListener(std::shared_ptr<AttackListener> listener);
+		void getLoot(std::tuple<float> loot);
+
 		HeroData* getHeroData();
 
 	protected:
@@ -49,5 +52,5 @@ class Hero {
 		sf::Clock clock;
 		sf::Time lastMoved;
 		HeroData heroData = { this->level, this->currHp, this->maxHp, this->currXp, this->xpToNextLevel, this->currEnergy, this->maxEnergy };
-		std::shared_ptr<EnemyManager> enemyManager;
+		std::shared_ptr<AttackListener> attackListener;
 };

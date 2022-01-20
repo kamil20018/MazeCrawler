@@ -227,6 +227,5 @@ std::vector<sf::Vector2i> Floor::getPath(sf::Vector2i start, sf::Vector2i end) {
 
         }
     }
-    path.push_back(end);
     return path;
 }

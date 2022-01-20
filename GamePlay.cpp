@@ -2,7 +2,7 @@
 
 
 GamePlay::GamePlay(std::shared_ptr<Context>& context) : context(context), state(States::HERO_TURN) {
-    srand(time(nullptr));
+    srand((unsigned int)time(NULL));
 }
 
 GamePlay::~GamePlay(){
@@ -15,7 +15,7 @@ void GamePlay::Init(){
     this->context->assets->AddTexture("hero", "Resources/Textures/Hero.png");
 
     this->enemyManager = std::make_shared<EnemyManager>();
-    this->hero = std::make_shared<Hero>(sf::Vector2i(1, 1), enemyManager, this->context->assets->GetTexture("hero"));
+    this->hero = std::make_shared<Hero>(sf::Vector2i(1, 1), this->context->assets->GetTexture("hero"));
     this->floor = std::make_shared<Floor>(10, 10, hero, enemyManager);
 
     std::shared_ptr<Goblin> goblin1 = std::make_shared<Goblin>(sf::Vector2i(3, 3), this->floor);
@@ -25,11 +25,18 @@ void GamePlay::Init(){
     goblin2->addTexture(context->assets->GetTexture("goblin"));
     goblin3->addTexture(context->assets->GetTexture("goblin"));
 
-    this->heroStatus = std::make_shared<HeroStatus>(hero->getHeroData(), context->assets->GetFont("pixel_font"));
+    std::vector<std::shared_ptr<Enemy>> enemyList = { goblin1, goblin2, goblin3 };
 
-    this->enemyManager->addEnemy(goblin1);
-    this->enemyManager->addEnemy(goblin2);
-    this->enemyManager->addEnemy(goblin3);
+
+    this->heroStatus = std::make_shared<HeroStatus>(hero->getHeroData(), context->assets->GetFont("pixel_font"));
+    this->enemyManager->setEnemyList(enemyList);
+
+    this->attackListener = std::make_shared<AttackListener>(this->hero, this->enemyManager);
+    this->hero->setAttackListener(this->attackListener);
+    this->enemyManager->setAttackListener(this->attackListener);
+    //this->enemyManager->addEnemy(goblin1);
+    //this->enemyManager->addEnemy(goblin2);
+    //this->enemyManager->addEnemy(goblin3);
 
     this->middlePos = (float)(this->WINDOW_HEIGHT - 75) / 2;
 }
@@ -87,6 +94,9 @@ void GamePlay::Update(){
         else if (not canMoveByDir and this->enemyManager->isEnemyAt(heroPos + this->moveDir) and this->floor->isPathTo(heroPos, this->moveDir) and utils::isNonZero(this->moveDir)) {
             utils::printVector("attacked an enemy at: ", heroPos + this->moveDir);
             this->hero->meeleAttack(heroPos + this->moveDir);
+            this->hero->getLoot(this->enemyManager->getLootFromDead());
+            this->enemyManager->removeDead();
+
             this->moveDir = sf::Vector2i(0, 0);
         }
         break;
@@ -102,14 +112,14 @@ void GamePlay::Update(){
 void GamePlay::Draw(){
     sf::Vector2i heroPos = this->hero->getPosition();
     this->context->window->clear(colors["red"]);
-
+    true;
 
     sf::Texture floorTexture = floor->getTexture();
 
     sf::Sprite mazeSprite;
     mazeSprite.setTexture(floorTexture);
     mazeSprite.setPosition(middlePos, middlePos);
-    mazeSprite.move(-heroPos.x * 75, -heroPos.y * 75);
+    mazeSprite.move(-heroPos.x * 75.0f, -heroPos.y * 75.0f);
 
     sf::Sprite heroSprite;
     heroSprite.setTexture(hero->getTexture());

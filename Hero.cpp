@@ -1,6 +1,6 @@
 #include "Hero.h"
 
-Hero::Hero(sf::Vector2i initPos, std::shared_ptr<EnemyManager> enemyManager, const sf::Texture& texture) {
+Hero::Hero(sf::Vector2i initPos, const sf::Texture& texture) {
 	this->texture = texture;
 	this->currHp = 100.0;
 	this->maxHp = 100.0;
@@ -14,7 +14,6 @@ Hero::Hero(sf::Vector2i initPos, std::shared_ptr<EnemyManager> enemyManager, con
 	this->currEnergy = 100.0;
 	this->speed = 3.3f;
 	this->lastMoved = sf::seconds(-1.01f);;
-	this->enemyManager = enemyManager;
 	this->vision = 3;
 }
 
@@ -76,16 +75,25 @@ void Hero::levelUp() {
 
 }
 
+void Hero::takeDamage(float damage) {
+	this->currHp -= damage;
+}
+
 void Hero::meeleAttack(sf::Vector2i position) {
-	if (this->currEnergy > this->meeleAttackEnergy and this->enemyManager->isEnemyAt(position)) {
-		this->enemyManager->damageEnemyAt(position, this->meeleDmg);
+	if (this->currEnergy > this->meeleAttackEnergy) {
+		this->attackListener->attackEnemyAt(position, this->meeleDmg);
 		this->currEnergy -= this->meeleAttackEnergy;
-		std::tuple<float> loot = this->enemyManager->getLootFromDead();
-		addXp(std::get<0>(loot));
-		this->enemyManager->removeDead();
 	}
 }
 
 HeroData* Hero::getHeroData() {
 	return &this->heroData;
+}
+
+void Hero::setAttackListener(std::shared_ptr<AttackListener> listener) {
+	this->attackListener = listener;
+}
+
+void Hero::getLoot(std::tuple<float> loot) {
+	addXp(std::get<0>(loot));
 }

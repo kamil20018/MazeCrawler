@@ -12,5 +12,5 @@ class Goblin : public Enemy {
 		void takeTurn();
 
 	private:
-		
+		bool canPerformAction();
 };

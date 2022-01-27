@@ -4,6 +4,7 @@
 Goblin::Goblin(sf::Vector2i initPos, std::shared_ptr<Floor> floor) : Enemy(initPos, floor) {
 	this->meeleDmg = 10;
 	this->meeleEnergy = 30;
+	this->level = 1;
 
 	this->maxEnergy = 100.0;
 	this->currEnergy = 100.0;
@@ -24,14 +25,12 @@ void Goblin::takeTurn() {
 		pathToHero.erase(pathToHero.begin());
 		updatePathToHero();
 	}
-	if (pathToHero.size() == 1 and pathToHero[0] == this->floor->getHeroPos()) {
-		//implement attack here
+	if (pathToHero.size() == 1 and pathToHero[0] == this->floor->getHeroPos()) { // attacks if is next to hero
 		while (this->currEnergy > this->meeleEnergy) {
 			std::cout << "hit the hero for" << this->meeleDmg << "dmg" << std::endl;
 			this->attackListener->attackHeroAt(pathToHero[0], this->meeleDmg);
 			this->currEnergy -= this->meeleEnergy;
 		}
-		
 		std::cout << "goblin should attack now" << std::endl;
 	}
 	std::cout << "goblin took turn" << std::endl;

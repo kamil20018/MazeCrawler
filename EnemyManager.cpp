@@ -1,5 +1,9 @@
 #include "EnemyManager.h"
 
+EnemyManager::EnemyManager() {
+	this->itemGenerator = ItemGenerator();
+}
+
 void EnemyManager::addEnemy(std::shared_ptr<Enemy> enemy) {
 	this->enemyList.push_back(enemy);
 }

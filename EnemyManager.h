@@ -6,12 +6,14 @@
 #include <SFML/Graphics.hpp>
 #include "Enemy.h"
 #include "AttackListener.h"
+#include "ItemGenerator.h"
 
 class Enemy;
 class AttackListener;
 
 class EnemyManager {
 	public:
+		EnemyManager();
 		void addEnemy(std::shared_ptr<Enemy> enemy);
 		void takeTurn();
 		void updatePathToHero();
@@ -25,5 +27,7 @@ class EnemyManager {
 		std::vector<std::shared_ptr<Enemy>> getEnemyList();
 	private:
 		std::vector<std::shared_ptr<Enemy>> enemyList;
+		ItemGenerator itemGenerator;
+
 
 };

@@ -23,6 +23,10 @@ void Enemy::updatePathToHero() {
 	}
 }
 
+int Enemy::getLevel() {
+	return this->level;
+}
+
 void Enemy::addAttackListener(std::shared_ptr<AttackListener> listener) {
 	this->attackListener = listener;
 }

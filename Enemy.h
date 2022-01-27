@@ -18,6 +18,7 @@ class Enemy : public sf::Drawable {
 		void addAttackListener(std::shared_ptr<AttackListener> listener);
 		float getXpOnDeath();
 		void addTexture(const sf::Texture& texture);
+		int getLevel();
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	protected:
 		sf::Texture texture;
@@ -26,6 +27,8 @@ class Enemy : public sf::Drawable {
 		std::shared_ptr<AttackListener> attackListener;
 		std::vector<sf::Vector2i> pathToHero;
 		int vision;
+		int level;
+
 		void moveBy(sf::Vector2i moveBy);
 		void moveTo(sf::Vector2i moveTo);
 

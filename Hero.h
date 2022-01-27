@@ -44,7 +44,6 @@ class Hero {
 		float currEnergy;
 		float maxEnergy;
 
-
 		float meeleDmg;
 		float meeleAttackEnergy;
 		sf::Texture texture;

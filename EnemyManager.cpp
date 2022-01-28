@@ -1,7 +1,7 @@
 #include "EnemyManager.h"
 
 EnemyManager::EnemyManager() {
-	this->itemGenerator = ItemGenerator();
+
 }
 
 void EnemyManager::addEnemy(std::shared_ptr<Enemy> enemy) {
@@ -24,14 +24,17 @@ void EnemyManager::removeDead() {
 	}
 }
 
-std::tuple<float> EnemyManager::getLootFromDead() { //it returns a tuple, cause enemies will drop items etc later on
+std::tuple<float, std::vector<std::shared_ptr<Item>>> EnemyManager::getLootFromDead() { //it returns a tuple, cause enemies will drop items etc later on
 	float totalXpGain = 0;
+	std::vector<int> enemyLevels;
 	for (std::shared_ptr enemy : this->enemyList) {
 		if (enemy->isDead()) {
+			enemyLevels.push_back(enemy->getLevel());
 			totalXpGain += enemy->getXpOnDeath();
 		}
 	}
-	std::tuple<float> output = std::make_tuple(totalXpGain);
+	std::vector<std::shared_ptr<Item>> items = this->itemGenerator.generateItems(enemyLevels);
+	std::tuple<float, std::vector<std::shared_ptr<Item>>> output = std::make_tuple(totalXpGain, items);
 	return output;
 }
 

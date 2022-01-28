@@ -33,6 +33,20 @@ namespace utils{
         return std::abs(vec1.x - vec2.x) + std::abs(vec2.y - vec2.y);
     }
 
+    /// <summary>
+    /// Warning: both lower and upper bounds are inclusive
+    /// </summary>
+    /// <param name="lowerBound"></param>
+    /// <param name="upperBound"></param>
+    /// <returns></returns>
+    int randInt(int lowerBound, int upperBound){
+        return rand() % (upperBound - lowerBound + 1) + lowerBound;
+    }
+
+    float randFloat(float lowerBound, float upperBound){
+        return lowerBound + (rand() / (RAND_MAX / (upperBound - lowerBound)));
+    }
+
     bool isNonZero(sf::Vector2i vector) {
         return vector != sf::Vector2i(0, 0);
     }

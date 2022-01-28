@@ -7,6 +7,7 @@ class Item
 		Item(ItemTypes type, ItemRarities rarity, int level);
 		ItemTypes getType();
 		ItemRarities getRarity();
+		virtual void print() {};
 	protected:
 		ItemTypes type;
 		ItemRarities rarity;

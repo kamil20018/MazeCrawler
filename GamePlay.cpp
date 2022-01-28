@@ -94,7 +94,8 @@ void GamePlay::Update(){
         else if (not canMoveByDir and this->enemyManager->isEnemyAt(heroPos + this->moveDir) and this->floor->isPathTo(heroPos, this->moveDir) and utils::isNonZero(this->moveDir)) {
             utils::printVector("attacked an enemy at: ", heroPos + this->moveDir);
             this->hero->meeleAttack(heroPos + this->moveDir);
-            this->hero->getLoot(this->enemyManager->getLootFromDead());
+            std::tuple<float, std::vector<std::shared_ptr<Item>>> loot = this->enemyManager->getLootFromDead();
+            this->hero->getLoot(std::get<0>(loot));
             this->enemyManager->removeDead();
 
             this->moveDir = sf::Vector2i(0, 0);

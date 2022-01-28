@@ -31,8 +31,8 @@ namespace utils {
 	extern void printVector(sf::Vector2i vec);
 	extern void printVector(std::string prefix, sf::Vector2i vec);
 	extern int vectorDistance(sf::Vector2i vec1, sf::Vector2i vec2);
-	
-
+	extern int randInt(int lowerBound, int upperBound); //INCLUSIVE
+	extern float randFloat(float lowerBound, float upperBound);
 	bool isNonZero(sf::Vector2i vector);
 	template <typename T>
 	bool isInVector(T item, std::vector<T> itemList){

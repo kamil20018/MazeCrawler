@@ -11,16 +11,18 @@ struct SwordProperties {
 	float fireBonus = -1.0f;
 };
 
-enum class OptionalSwordProperties {
+enum class OptSwordProperties {
 	CRIT_CHANCE,
 	DAMAGE_PERCENT,
 	FIRE_BONUS,
+	LAST_ELEMENT
 };
 
 enum class ItemTypes {
 	SWORD,
 	HELMET,
-	BOOTS
+	BOOTS,
+	LAST_ELEMENT
 };
 
 enum class ItemRarities {
@@ -28,5 +30,6 @@ enum class ItemRarities {
 	UNCOMMON,
 	RARE,
 	EPIC,
-	LEGENDARY
+	LEGENDARY,
+	LAST_ELEMENT
 };

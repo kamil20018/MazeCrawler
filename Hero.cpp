@@ -94,6 +94,6 @@ void Hero::setAttackListener(std::shared_ptr<AttackListener> listener) {
 	this->attackListener = listener;
 }
 
-void Hero::getLoot(std::tuple<float> loot) {
-	addXp(std::get<0>(loot));
+void Hero::getLoot(EnemyLoot loot) {
+	addXp(loot.xp);
 }

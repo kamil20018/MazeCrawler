@@ -10,11 +10,13 @@ SwordProperties Sword::getProperties(){
 }
 
 void Sword::print() {
-	std::cout << (int)rarity << std::endl;
-	std::cout << properties.minAttack << std::endl;
-	std::cout << properties.maxAttack << std::endl;
-	std::cout << properties.weight << std::endl;
-	std::cout << properties.critChance << std::endl;
-	std::cout << properties.damagePercent << std::endl;
-	std::cout << properties.fireBonus << std::endl;
+	std::cout << std::endl;
+	std::cout << "rarity: " << (int)rarity << std::endl;
+	std::cout << "minAttack: " << properties.minAttack << std::endl;
+	std::cout << "maxAttack: " << properties.maxAttack << std::endl;
+	std::cout << "weight: " << properties.weight << std::endl;
+	std::cout << "critChance: " << properties.critChance << std::endl;
+	std::cout << "damagePercent: " << properties.damagePercent << std::endl;
+	std::cout << "fireBonus: " << properties.fireBonus << std::endl;
+	std::cout << std::endl;
 }

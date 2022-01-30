@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <stdlib.h>
-
+#include "Item.h"
 extern const std::vector<sf::Vector2i> dirs;
 extern std::map <std::string, sf::Color> colors;
 
@@ -14,7 +14,6 @@ namespace dir {
 	inline const sf::Vector2i left(-1, 0);
 	inline const sf::Vector2i right(1, 0);
 }
-
 
 
 struct HeroData {
@@ -27,6 +26,13 @@ struct HeroData {
 	const float& maxEnergy;
 };
 
+
+struct EnemyLoot {
+	float xp;
+	std::vector<std::pair<ItemTypes, std::shared_ptr<Item>>> items;
+};
+
+
 namespace utils {
 	extern void printVector(sf::Vector2i vec);
 	extern void printVector(std::string prefix, sf::Vector2i vec);
@@ -34,6 +40,7 @@ namespace utils {
 	extern int randInt(int lowerBound, int upperBound); //INCLUSIVE
 	extern float randFloat(float lowerBound, float upperBound);
 	bool isNonZero(sf::Vector2i vector);
+
 	template <typename T>
 	bool isInVector(T item, std::vector<T> itemList){
 		for (T testItem : itemList) {
@@ -43,7 +50,6 @@ namespace utils {
 		}
 		return false;
 	}
-
 
 }
 

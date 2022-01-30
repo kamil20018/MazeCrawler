@@ -5,6 +5,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Enemy.h"
+#include "Constants.h"
 #include "AttackListener.h"
 #include "ItemGenerator.h"
 
@@ -22,7 +23,7 @@ class EnemyManager {
 		void removeDead();
 		void setAttackListener(std::shared_ptr<AttackListener> listener);
 		void setEnemyList(std::vector<std::shared_ptr<Enemy>> enemyList);
-		std::tuple<float, std::vector<std::shared_ptr<Item>>> getLootFromDead();
+		EnemyLoot getLootFromDead();
 		std::vector<sf::Vector2i> getEnemyPositions();
 		std::vector<std::shared_ptr<Enemy>> getEnemyList();
 	private:

@@ -10,7 +10,7 @@
 #include "ItemData.h"
 class ItemGenerator{
 	public:
-		std::vector<std::shared_ptr<Item>> generateItems(std::vector<int> enemyLevels);
+		std::vector<std::pair<ItemTypes, std::shared_ptr<Item>>> generateItems(std::vector<int> enemyLevels);
 		std::shared_ptr<Sword> generateSword(int enemyLevel);
 
 	private:

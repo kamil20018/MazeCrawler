@@ -24,7 +24,7 @@ void EnemyManager::removeDead() {
 	}
 }
 
-std::tuple<float, std::vector<std::shared_ptr<Item>>> EnemyManager::getLootFromDead() { //it returns a tuple, cause enemies will drop items etc later on
+EnemyLoot EnemyManager::getLootFromDead() { //it returns a tuple, cause enemies will drop items etc later on
 	float totalXpGain = 0;
 	std::vector<int> enemyLevels;
 	for (std::shared_ptr enemy : this->enemyList) {
@@ -33,9 +33,8 @@ std::tuple<float, std::vector<std::shared_ptr<Item>>> EnemyManager::getLootFromD
 			totalXpGain += enemy->getXpOnDeath();
 		}
 	}
-	std::vector<std::shared_ptr<Item>> items = this->itemGenerator.generateItems(enemyLevels);
-	std::tuple<float, std::vector<std::shared_ptr<Item>>> output = std::make_tuple(totalXpGain, items);
-	return output;
+	std::vector<std::pair<ItemTypes, std::shared_ptr<Item>>> items = this->itemGenerator.generateItems(enemyLevels);
+	return EnemyLoot{totalXpGain, items};
 }
 
 void EnemyManager::takeTurn() {

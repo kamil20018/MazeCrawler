@@ -24,7 +24,7 @@ class Hero {
 		void levelUp();
 		void takeDamage(float damage);
 		void setAttackListener(std::shared_ptr<AttackListener> listener);
-		void getLoot(std::tuple<float> loot);
+		void getLoot(EnemyLoot loot);
 
 		HeroData* getHeroData();
 

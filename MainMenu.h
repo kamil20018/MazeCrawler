@@ -7,6 +7,7 @@
 #include "State.h"
 #include "Game.h"
 #include "GamePlay.h"
+#include "Constants.h"
 class MainMenu : public State
 {
 private:
@@ -29,4 +30,5 @@ public:
     void ProcessInput() override;
     void Update() override;
     void Draw() override;
+    States getState() override;
 };

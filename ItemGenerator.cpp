@@ -1,16 +1,16 @@
 #include "ItemGenerator.h"
 
-std::vector<std::pair<ItemTypes, std::shared_ptr<Item>>> ItemGenerator::generateItems(std::vector<int> enemyLevels) {
-	std::vector<std::pair<ItemTypes, std::shared_ptr<Item>>> items;
+std::vector<std::shared_ptr<Item>> ItemGenerator::generateItems(std::vector<int> enemyLevels) {
+	std::vector<std::shared_ptr<Item>> items;
 	ItemTypes type = ItemTypes::SWORD;
 
 	for (int level : enemyLevels) {
 		switch (type) {
 		case ItemTypes::SWORD:
-			items.push_back(std::pair(ItemTypes::SWORD, generateSword(level)));
-			items.push_back(std::pair(ItemTypes::SWORD, generateSword(level)));
-			items.push_back(std::pair(ItemTypes::SWORD, generateSword(level)));
-			items.push_back(std::pair(ItemTypes::SWORD, generateSword(level)));
+			items.push_back(generateSword(level));
+			items.push_back(generateSword(level));
+			items.push_back(generateSword(level));
+			items.push_back(generateSword(level));
 		}
 	}
 	return items;

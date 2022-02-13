@@ -33,7 +33,7 @@ EnemyLoot EnemyManager::getLootFromDead() { //it returns a tuple, cause enemies 
 			totalXpGain += enemy->getXpOnDeath();
 		}
 	}
-	std::vector<std::pair<ItemTypes, std::shared_ptr<Item>>> items = this->itemGenerator.generateItems(enemyLevels);
+	std::vector<std::shared_ptr<Item>> items = this->itemGenerator.generateItems(enemyLevels);
 	return EnemyLoot{totalXpGain, items};
 }
 

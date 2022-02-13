@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 
 #include <memory>
 
@@ -8,6 +7,7 @@
 #include "AssetManager.h"
 #include "StateManager.h"
 
+class StateManager;
 
 struct Context
 {

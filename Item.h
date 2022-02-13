@@ -1,5 +1,6 @@
 #pragma once
 #include "ItemData.h"
+#include <sstream>
 #include <SFML/Graphics.hpp>
 class Item
 {
@@ -8,6 +9,7 @@ class Item
 		ItemTypes getType();
 		ItemRarities getRarity();
 		virtual void print() {};
+		virtual std::string getDescription() = 0;
 	protected:
 		ItemTypes type;
 		ItemRarities rarity;

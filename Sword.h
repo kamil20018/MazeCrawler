@@ -8,6 +8,7 @@ class Sword : public Item
 		Sword(ItemTypes type, ItemRarities rarity, int level, SwordProperties properties);
 		SwordProperties getProperties();
 		virtual void print();
+		virtual std::string getDescription();
 	private:
 		SwordProperties properties;
 };

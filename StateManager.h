@@ -4,21 +4,22 @@
 #include <memory>
 
 #include <State.h>
-
+#include "ItemChooseState.h"
+#include "Item.h"
 class StateManager {
 
 	public:
 		StateManager();
 		~StateManager();
 
-		void AddState(std::unique_ptr<State> toAdd, bool replace = false);
+		void AddState(std::shared_ptr<State> toAdd, bool replace = false);
 		void PopCurrent();
 		void ProcessStateChange();
-		std::unique_ptr<State>& GetCurrent();
+		std::shared_ptr<State>& GetCurrent();
 
 	private:
-		std::stack<std::unique_ptr<State>> stateStack;
-		std::unique_ptr<State> newState;
+		std::stack<std::shared_ptr<State>> stateStack;
+		std::shared_ptr<State> newState;
 
 		bool add;
 		bool replace;

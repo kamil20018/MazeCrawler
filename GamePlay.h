@@ -14,6 +14,7 @@
 #include "Goblin.h"
 #include "EnemyManager.h"
 #include "HeroStatus.h"
+#include "ItemChooseState.h"
 
 #include "Game.h"
 #include "State.h"
@@ -30,15 +31,16 @@ class GamePlay : public State
         void Draw() override;
         void Pause() override;
         void Start() override;
-
+        States getState();
     private:
-        enum class States {
+        enum class Turn {
             HERO_TURN,
             ENEMY_TURN
         };
 
         std::shared_ptr<Context> context;
         bool isPaused;
+        bool openInventory;
         const int WINDOW_WIDTH = 800;
         const int WINDOW_HEIGHT = 800;
         std::shared_ptr<EnemyManager> enemyManager;
@@ -46,7 +48,8 @@ class GamePlay : public State
         std::shared_ptr<Floor> floor;
         std::shared_ptr<HeroStatus> heroStatus;
         std::shared_ptr<AttackListener> attackListener;
+        std::vector<std::shared_ptr<Item>> items;
         float middlePos;
-        States state;
+        Turn state;
         sf::Vector2i moveDir;
 };

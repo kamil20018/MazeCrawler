@@ -111,3 +111,7 @@ void MainMenu::Draw(){
     context->window->draw(exitButton);
     context->window->display();
 }
+
+States MainMenu::getState() {
+    return States::MAIN_MENU;
+}

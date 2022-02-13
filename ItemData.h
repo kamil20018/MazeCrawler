@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 struct SwordProperties {
 	//must have
@@ -33,3 +34,27 @@ enum class ItemRarities {
 	LEGENDARY,
 	LAST_ELEMENT
 };
+
+inline std::ostream& operator<<(std::ostream& os, ItemRarities rarity){
+	switch (rarity) {
+	case ItemRarities::COMMON:
+		os << "common";
+		break;
+	case ItemRarities::UNCOMMON:
+		os << "uncommon";
+		break;	
+	case ItemRarities::RARE:
+		os << "rare";
+		break;	
+	case ItemRarities::EPIC:
+		os << "epic";
+		break;	
+	case ItemRarities::LEGENDARY:
+		os << "legendary";
+		break;
+	case ItemRarities::LAST_ELEMENT:
+		os << "wrong rarity, cause it's last element";
+		break;
+	}
+	return os;
+}

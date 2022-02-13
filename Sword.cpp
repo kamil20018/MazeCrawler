@@ -20,3 +20,9 @@ void Sword::print() {
 	std::cout << "fireBonus: " << properties.fireBonus << std::endl;
 	std::cout << std::endl;
 }
+
+std::string Sword::getDescription(){
+	std::ostringstream desc;
+	desc << this->rarity << " sword lvl " << this->level;
+	return desc.str();
+}

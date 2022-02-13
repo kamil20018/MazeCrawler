@@ -15,7 +15,6 @@ namespace dir {
 	inline const sf::Vector2i right(1, 0);
 }
 
-
 struct HeroData {
 	const int& level;
 	const float& currHp;
@@ -26,12 +25,17 @@ struct HeroData {
 	const float& maxEnergy;
 };
 
-
 struct EnemyLoot {
 	float xp;
-	std::vector<std::pair<ItemTypes, std::shared_ptr<Item>>> items;
+	std::vector<std::shared_ptr<Item>> items;
 };
 
+enum class States {
+	MAIN_MENU,
+	GAMEPLAY,
+	INVENTORY,
+	ITEM_CHOOSE,
+};
 
 namespace utils {
 	extern void printVector(sf::Vector2i vec);

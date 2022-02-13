@@ -1,7 +1,8 @@
 #include "GamePlay.h"
 
 
-GamePlay::GamePlay(std::shared_ptr<Context>& context) : context(context), state(States::HERO_TURN) {
+GamePlay::GamePlay(std::shared_ptr<Context>& context) : context(context), state(Turn::HERO_TURN) {
+    this->openInventory = false;
     srand((unsigned int)time(NULL));
 }
 
@@ -18,9 +19,9 @@ void GamePlay::Init(){
     this->hero = std::make_shared<Hero>(sf::Vector2i(1, 1), this->context->assets->GetTexture("hero"));
     this->floor = std::make_shared<Floor>(10, 10, hero, enemyManager);
 
-    std::shared_ptr<Goblin> goblin1 = std::make_shared<Goblin>(sf::Vector2i(3, 3), this->floor);
-    std::shared_ptr<Goblin> goblin2 = std::make_shared<Goblin>(sf::Vector2i(3, 5), this->floor);
-    std::shared_ptr<Goblin> goblin3 = std::make_shared<Goblin>(sf::Vector2i(3, 7), this->floor);
+    std::shared_ptr<Goblin> goblin1 = std::make_shared<Goblin>(sf::Vector2i(1, 1), this->floor);
+    std::shared_ptr<Goblin> goblin2 = std::make_shared<Goblin>(sf::Vector2i(1, 2), this->floor);
+    std::shared_ptr<Goblin> goblin3 = std::make_shared<Goblin>(sf::Vector2i(2, 1), this->floor);
     goblin1->addTexture(context->assets->GetTexture("goblin"));
     goblin2->addTexture(context->assets->GetTexture("goblin"));
     goblin3->addTexture(context->assets->GetTexture("goblin"));
@@ -63,8 +64,16 @@ void GamePlay::ProcessInput(){
             case sf::Keyboard::D:
                 this->moveDir = dir::right;
                 break;
+            case sf::Keyboard::I:
+                this->openInventory = true;
+                break;
+            case sf::Keyboard::C: //debug for stored items
+                for (std::shared_ptr<Item> item : this->items) {
+                    item->print();
+                }
+                break;
             case sf::Keyboard::Space:
-                this->state = States::ENEMY_TURN;
+                this->state = Turn::ENEMY_TURN;
                 break;
             default:
                 break;
@@ -74,14 +83,20 @@ void GamePlay::ProcessInput(){
 }
 
 void GamePlay::Update(){
+    if (this->openInventory) {
+        this->openInventory = false;
+        this->context->states->AddState(std::make_unique<ItemChooseState>(this->context, this->items));
+    }
+
+
     sf::Vector2i heroPos = this->hero->getPosition();
     bool canMoveByDir = this->floor->canMoveTo(heroPos, this->moveDir);
     switch(this->state) {
-    case States::HERO_TURN:
+    case Turn::HERO_TURN:
 
         if (not this->hero->canTakeAction() and utils::isNonZero(this->moveDir)) {
             std::cout << "insufficient energy to perform any action, enemy turn" << std::endl;
-            this->state = States::ENEMY_TURN;
+            this->state = Turn::ENEMY_TURN;
             this->moveDir = sf::Vector2i(0, 0);
         }
         else if (canMoveByDir and utils::isNonZero(this->moveDir)) {
@@ -96,7 +111,7 @@ void GamePlay::Update(){
             this->hero->meeleAttack(heroPos + this->moveDir);
 
             EnemyLoot loot = this->enemyManager->getLootFromDead();
-
+            this->items.insert(items.end(), loot.items.begin(), loot.items.end());
             this->hero->getLoot(loot);
 
 
@@ -105,9 +120,9 @@ void GamePlay::Update(){
         }
         break;
 
-    case States::ENEMY_TURN:
+    case Turn::ENEMY_TURN:
         this->enemyManager->takeTurn();
-        this->state = States::HERO_TURN;
+        this->state = Turn::HERO_TURN;
         this->hero->turnPassed();
         break;
     }
@@ -137,7 +152,7 @@ void GamePlay::Draw(){
     }
     this->context->window->draw(*heroStatus);
         
-    context->window->display();
+    this->context->window->display();
 }
 
 void GamePlay::Pause(){
@@ -146,4 +161,8 @@ void GamePlay::Pause(){
 
 void GamePlay::Start(){
     isPaused = false;
+}
+
+States GamePlay::getState() {
+    return States::GAMEPLAY;
 }

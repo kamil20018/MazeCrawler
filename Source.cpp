@@ -17,6 +17,7 @@ int main()
     game.Run();
     std::cout << "test" << std::endl;
     std::cout << "additional test" << std::endl;
+    std::cout << "from laptop to pc" << std::endl;
     return 0;
 }
 

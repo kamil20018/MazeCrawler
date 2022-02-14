@@ -46,6 +46,7 @@ void ItemChooseState::ProcessInput(){
         else if (event.type == sf::Event::KeyPressed){
             switch (event.key.code){
                 case sf::Keyboard::Escape:
+                case sf::Keyboard::Enter:
                     this->finished = true;
                     break;
                 case sf::Keyboard::W:

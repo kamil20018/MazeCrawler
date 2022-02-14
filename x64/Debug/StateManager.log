@@ -1,0 +1,37 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(510,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (StateManager.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  AssetManager.cpp
+  AttackListener.cpp
+  Constants.cpp
+  Enemy.cpp
+  EnemyManager.cpp
+D:\code\c++\StateManager\StateManager\EnemyManager.cpp(17,2): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Floor.cpp
+D:\code\c++\StateManager\StateManager\Floor.cpp(4,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\code\c++\StateManager\StateManager\Floor.cpp(37,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\code\c++\StateManager\StateManager\Floor.cpp(93,70): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+D:\code\c++\StateManager\StateManager\Floor.cpp(93,44): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+  Game.cpp
+D:\code\c++\StateManager\StateManager\ItemChooseState.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  GamePlay.cpp
+D:\code\c++\StateManager\StateManager\ItemChooseState.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Goblin.cpp
+  Hero.cpp
+  HeroStatus.cpp
+  Item.cpp
+  ItemChooseState.cpp
+D:\code\c++\StateManager\StateManager\ItemChooseState.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\code\c++\StateManager\StateManager\ItemChooseState.cpp(11,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  ItemGenerator.cpp
+D:\code\c++\StateManager\StateManager\ItemGenerator.cpp(41,40): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\code\c++\StateManager\StateManager\ItemGenerator.cpp(42,40): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  MainMenu.cpp
+D:\code\c++\StateManager\StateManager\ItemChooseState.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Source.cpp
+D:\code\c++\StateManager\StateManager\ItemChooseState.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  StateManager.cpp
+D:\code\c++\StateManager\StateManager\ItemChooseState.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\code\c++\StateManager\StateManager\StateManager.cpp(69,46): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Sword.cpp
+  Generating Code...
+D:\code\c++\StateManager\StateManager\Floor.cpp(199): warning C4715: 'Floor::isPathTo': not all control paths return a value
+  StateManager.vcxproj -> D:\code\c++\StateManager\x64\Debug\MazeCrawler.exe

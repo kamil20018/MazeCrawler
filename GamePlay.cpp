@@ -72,6 +72,12 @@ void GamePlay::ProcessInput(){
                     item->print();
                 }
                 break;
+            case sf::Keyboard::F:
+                this->context->states->AddState(std::make_shared<GamePlay>(this->context));
+                break;
+            case sf::Keyboard::G:
+                this->context->states->SwapPrevious();
+                break;
             case sf::Keyboard::Space:
                 this->state = Turn::ENEMY_TURN;
                 break;

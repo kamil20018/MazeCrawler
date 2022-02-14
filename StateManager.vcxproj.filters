@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Enemies.h">
+      <UniqueIdentifier>{4558f36c-ccfd-4585-b79a-046a99425fb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Enemies.cpp">
+      <UniqueIdentifier>{07792cab-6676-4787-b80e-637d63178bc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\States.cpp">
+      <UniqueIdentifier>{e664e870-76bd-4377-9aa1-2ce7b3fe4ff3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\States.h">
+      <UniqueIdentifier>{ae6070bf-1b43-4e58-ab03-314975b56f38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Items.h">
+      <UniqueIdentifier>{c726eba2-64d8-46a8-832b-e07532fd8499}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Items.cpp">
+      <UniqueIdentifier>{0a1494fb-ec1c-4f4a-81f8-c8df53a94d77}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Floor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Hero.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Constants.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\Enemies.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Goblin.cpp">
+      <Filter>Source Files\Enemies.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>Source Files\Enemies.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="HeroStatus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StateManager.cpp">
+      <Filter>Source Files\States.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Source Files\States.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\States.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlay.cpp">
+      <Filter>Source Files\States.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files\Items.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemGenerator.cpp">
+      <Filter>Source Files\Items.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Sword.cpp">
+      <Filter>Source Files\Items.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemChooseState.cpp">
+      <Filter>Source Files\States.cpp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Floor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hero.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Enemies.h</Filter>
+    </ClInclude>
+    <ClInclude Include="Goblin.h">
+      <Filter>Header Files\Enemies.h</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>Header Files\Enemies.h</Filter>
+    </ClInclude>
+    <ClInclude Include="HeroStatus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StateManager.h">
+      <Filter>Header Files\States.h</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Header Files\States.h</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Header Files\States.h</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\States.h</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlay.h">
+      <Filter>Header Files\States.h</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files\Items.h</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemData.h">
+      <Filter>Header Files\Items.h</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemGenerator.h">
+      <Filter>Header Files\Items.h</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.h">
+      <Filter>Header Files\Items.h</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemChooseState.h">
+      <Filter>Header Files\States.h</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

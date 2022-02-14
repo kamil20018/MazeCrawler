@@ -16,6 +16,7 @@ int main()
     Game game;
     game.Run();
     std::cout << "test" << std::endl;
+    std::cout << "additional test" << std::endl;
     return 0;
 }
 

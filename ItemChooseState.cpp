@@ -8,7 +8,7 @@ ItemChooseState::ItemChooseState(std::shared_ptr<Context>& context, std::vector<
 	for (std::shared_ptr<Item> item : this->items) {
 		item->print();
 	}
-    this->itemCount = items.size();
+    this->itemCount = (int)items.size();
     std::cout << items.size() << std::endl;
     this->finished = false;
     for (int i = 0; i < this->itemCount; i++) {

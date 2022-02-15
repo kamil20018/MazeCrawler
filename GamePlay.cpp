@@ -2,7 +2,7 @@
 
 
 GamePlay::GamePlay(std::shared_ptr<Context>& context) : context(context), state(Turn::HERO_TURN) {
-    this->openInventory = false;
+    this->itemManagerOpen = false;
     srand((unsigned int)time(NULL));
 }
 
@@ -64,8 +64,11 @@ void GamePlay::ProcessInput(){
             case sf::Keyboard::D:
                 this->moveDir = dir::right;
                 break;
+            case sf::Keyboard::M:
+                this->itemManagerOpen = true;
+                break;
             case sf::Keyboard::I:
-                this->openInventory = true;
+                this->context->states->ToInventoryState();
                 break;
             case sf::Keyboard::C: //debug for stored items
                 for (std::shared_ptr<Item> item : this->items) {
@@ -89,9 +92,10 @@ void GamePlay::ProcessInput(){
 }
 
 void GamePlay::Update(){
-    if (this->openInventory) {
-        this->openInventory = false;
+    if (this->itemManagerOpen) {
+        this->itemManagerOpen = false;
         this->context->states->AddState(std::make_unique<ItemChooseState>(this->context, this->items));
+        this->items.clear();
     }
 
 

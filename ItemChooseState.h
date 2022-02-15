@@ -3,7 +3,7 @@
 #include "Game.h"
 #include "Item.h"
 #include "Constants.h"
-#include "SFML/Graphics.hpp";
+#include "SFML/Graphics.hpp"
 
 struct Context;
 class ItemChooseState : public State

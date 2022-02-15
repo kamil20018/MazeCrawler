@@ -4,7 +4,7 @@
 
 
 StateManager::StateManager() : add(false), replace(false), remove(false), swap(false) {
-
+	//this->inventoryState = std::make_shared<InventoryState>();
 }
 
 StateManager::~StateManager() {
@@ -34,6 +34,7 @@ void StateManager::ProcessStateChange() {
 			if (items.size() > 0) {
 				passItemsToInventory = true;
 			}
+			this->inventoryState->AddItems(items);
 		}
 
 		this->stateStack.pop_back();
@@ -76,6 +77,14 @@ void StateManager::ProcessStateChange() {
 
 void StateManager::SwapPrevious(){
 	this->swap = true;
+}
+
+void StateManager::ToInventoryState(){
+	this->stateStack.push_back(this->inventoryState);
+}
+
+void StateManager::InitInventory(std::shared_ptr<Context>& context){
+	this->inventoryState = std::make_shared<InventoryState>(context);
 }
 
 std::shared_ptr<State>& StateManager::GetCurrent() {

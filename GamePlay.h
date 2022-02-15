@@ -40,7 +40,7 @@ class GamePlay : public State
 
         std::shared_ptr<Context> context;
         bool isPaused;
-        bool openInventory;
+        bool itemManagerOpen;
         const int WINDOW_WIDTH = 800;
         const int WINDOW_HEIGHT = 800;
         std::shared_ptr<EnemyManager> enemyManager;

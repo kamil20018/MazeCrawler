@@ -60,8 +60,7 @@ void Enemy::addTexture(const sf::Texture& texture) {
 	this->texture = texture;
 }
 
-void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
+void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	int WINDOW_HEIGHT = 800;
 	float middlePos = (float)(WINDOW_HEIGHT - 75) / 2;
 	sf::Sprite enemySprite;

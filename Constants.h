@@ -5,6 +5,10 @@
 #include <string>
 #include <stdlib.h>
 #include "Item.h"
+
+#define SCREEN_WIDTH 1200
+#define SCREEN_HEIGHT 800
+
 extern const std::vector<sf::Vector2i> dirs;
 extern std::map <std::string, sf::Color> colors;
 
@@ -46,7 +50,7 @@ namespace utils {
 	bool isNonZero(sf::Vector2i vector);
 
 	template <typename T>
-	bool isInVector(T item, std::vector<T> itemList){
+	bool isInVector(T item, std::vector<T> itemList) {
 		for (T testItem : itemList) {
 			if (item == testItem) {
 				return true;

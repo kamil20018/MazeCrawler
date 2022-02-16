@@ -37,7 +37,6 @@ void TextField::update() {
 	float textWidth = textFieldBounds.width;
 	float textHeight = textFieldBounds.height;
 	sf::Vector2f textOffset = sf::Vector2f(-textFieldBounds.left, -textFieldBounds.top);
-
 	float fieldWidth;
 	float fieldHeight;
 	std::cout << this->hardBoundsSize.x << std::endl;
@@ -58,7 +57,7 @@ void TextField::update() {
 
 	this->background.setSize(sf::Vector2f(fieldWidth, fieldHeight));
 	this->background.setPosition(this->position);
-	this->background.setFillColor(colors["red"]);
+
 	switch (this->alignment) {
 		case Alignment::MIDDLE_LEFT:
 			this->text.setPosition(this->position + sf::Vector2f(this->padding, vertCenter) + sf::Vector2f(-2.0f, -7.0f));
@@ -104,6 +103,10 @@ void TextField::setFontSize(int size) {
 	update();
 }
 
+void TextField::setFontColor(sf::Color color) {
+	this->text.setFillColor(color);
+}
+
 void TextField::setSelected(bool selected) {
 	if (selected and not this->wasSelected) {
 		this->text.setString((std::string)"> " + this->text.getString());
@@ -111,6 +114,7 @@ void TextField::setSelected(bool selected) {
 	}
 	else if (this->wasSelected) {
 		this->text.setString(this->text.getString().toAnsiString().substr(2));
+		this->wasSelected = false;
 	}
 
 	update();
@@ -122,7 +126,6 @@ void TextField::setPadding(float padding) {
 }
 
 void TextField::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-
 	target.draw(this->background, states);
 	target.draw(this->text, states);
 }

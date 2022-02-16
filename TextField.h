@@ -19,6 +19,7 @@ public:
 	void setScalingBoundsSize(sf::Vector2f boundsSize);
 	void setHardBoundsSize(sf::Vector2f boundsSize);
 	void setFontSize(int size);
+	void setFontColor(sf::Color color);
 	void setSelected(bool selected);
 	void setPadding(float padding);
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

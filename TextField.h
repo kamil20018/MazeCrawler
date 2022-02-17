@@ -22,6 +22,7 @@ public:
 	void setFontColor(sf::Color color);
 	void setSelected(bool selected);
 	void setPadding(float padding);
+	void setString(std::string str);
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 private:

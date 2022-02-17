@@ -1,15 +1,15 @@
 #pragma once
 #include <iostream>
-
+#include <optional>
 struct SwordProperties {
 	//must have
 	float minAttack = 0.0f;
 	float maxAttack = 10.0f;
 	float weight = 1.5f;
 	//optional
-	float critChance = -1.0f;
-	float damagePercent = -1.0f;
-	float fireBonus = -1.0f;
+	std::optional<float> critChance;
+	std::optional<float> damagePercent;
+	std::optional<float> fireBonus;
 };
 
 enum class OptSwordProperties {

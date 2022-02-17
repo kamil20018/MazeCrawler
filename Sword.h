@@ -9,6 +9,8 @@ class Sword : public Item
 		SwordProperties getProperties();
 		virtual void print();
 		virtual std::string getDescription();
+		virtual std::string getBaseStatString();
+		virtual std::string getSpecialStatString();
 	private:
 		SwordProperties properties;
 };

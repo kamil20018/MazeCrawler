@@ -32,6 +32,10 @@ private:
 	std::vector<bool> removedItems;
 	bool taken;
 	bool removed;
+
+	TextField baseProperties;
+	TextField specialProperties;
+
 	float itemListWidth = (float)SCREEN_WIDTH / 3.0f;
 	float itemHeight;
 };

@@ -124,6 +124,11 @@ void TextField::setPadding(float padding) {
 	update();
 }
 
+void TextField::setString(std::string str) {
+	this->text.setString(str);
+	update();
+}
+
 void TextField::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(this->background, states);
 	target.draw(this->text, states);

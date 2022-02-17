@@ -23,10 +23,12 @@ ItemChooseState::~ItemChooseState() {
 }
 
 void ItemChooseState::Init() {
+	//left part init
 	float totalHeight = this->textPadding;
 	int index = 0;
 	for (std::shared_ptr<Item> item : items) {
-		TextField textField(item->getDescription(), sf::Vector2f(0.0f, this->itemHeight * index), this->context->assets->GetFont("pixel_font"), true);
+		TextField textField(item->getDescription(), sf::Vector2f(0.0f, this->itemHeight * index), 
+							this->context->assets->GetFont("pixel_font"), true);
 		textField.setFontSize(25);
 		textField.setHardBoundsSize(sf::Vector2f(this->itemListWidth, this->itemHeight));
 		textField.setBackgroundColor(colors["black"]);
@@ -35,6 +37,26 @@ void ItemChooseState::Init() {
 		this->textFields.push_back(textField);
 		index++;
 	}
+
+	//middle part init
+	TextField baseProp((std::string)" ", sf::Vector2f(this->itemListWidth, 0.0f),
+					   this->context->assets->GetFont("pixel_font"), true);
+	baseProp.setFontSize(25);
+	baseProp.setHardBoundsSize(sf::Vector2f(this->itemListWidth, 2 * SCREEN_HEIGHT / 5.0f));
+	baseProp.setBackgroundColor(colors["black"]);
+	baseProp.setFontColor(colors["white"]);
+	baseProp.setBackgroundColor(colors["green"]);
+	this->baseProperties = baseProp;
+
+
+	TextField specProp((std::string)" ", sf::Vector2f(this->itemListWidth, 2 * SCREEN_HEIGHT / 5.0f),
+					   this->context->assets->GetFont("pixel_font"), true);
+	specProp.setFontSize(25);
+	specProp.setHardBoundsSize(sf::Vector2f(this->itemListWidth, 3 * SCREEN_HEIGHT / 5.0f));
+	specProp.setBackgroundColor(colors["black"]);
+	specProp.setFontColor(colors["white"]);
+	specProp.setBackgroundColor(colors["red"]);
+	this->specialProperties = specProp;
 }
 
 void ItemChooseState::ProcessInput() {
@@ -98,6 +120,7 @@ void ItemChooseState::Update() {
 void ItemChooseState::Draw() {
 	this->context->window->clear(colors["black"]);
 
+	//item selection part
 	for (int i = 0; i < this->itemCount; i++) {
 		if (i == this->currentField) {
 			this->textFields[i].setSelected(true);
@@ -117,6 +140,11 @@ void ItemChooseState::Draw() {
 		this->textFields[i].setSelected(false);
 	}
 
+	//choosen item
+	this->baseProperties.setString(this->items[this->currentField]->getBaseStatString());
+	this->specialProperties.setString(this->items[this->currentField]->getSpecialStatString());
+	this->context->window->draw(this->baseProperties);
+	this->context->window->draw(this->specialProperties);
 	this->context->window->display();
 }
 

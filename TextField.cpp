@@ -37,14 +37,15 @@ void TextField::update() {
 	float textWidth = textFieldBounds.width;
 	float textHeight = textFieldBounds.height;
 	sf::Vector2f textOffset = sf::Vector2f(-textFieldBounds.left, -textFieldBounds.top);
+
 	float fieldWidth;
 	float fieldHeight;
-	std::cout << this->hardBoundsSize.x << std::endl;
+
 	if (hardBounds) {
 		fieldWidth = this->hardBoundsSize.x;
 		fieldHeight = this->hardBoundsSize.y;
 	}
-	else if (scalingBounds) {
+	else {
 		fieldWidth = textWidth * (1.0f + (scalingBoundsSize.x / 100.0f));
 		fieldHeight = textHeight * (1.0f + (scalingBoundsSize.y / 100.0f));
 	}
@@ -52,8 +53,6 @@ void TextField::update() {
 
 	float horizCenter = (fieldWidth - textWidth) / 2.0f;
 	float vertCenter = (fieldHeight - textHeight) / 2.0f;
-
-	std::cout << horizCenter << " " << vertCenter << std::endl;
 
 	this->background.setSize(sf::Vector2f(fieldWidth, fieldHeight));
 	this->background.setPosition(this->position);

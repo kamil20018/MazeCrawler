@@ -31,6 +31,7 @@ void ItemChooseState::Init() {
 		textField.setHardBoundsSize(sf::Vector2f(this->itemListWidth, this->itemHeight));
 		textField.setBackgroundColor(colors["black"]);
 		textField.setFontColor(colors["white"]);
+		textField.setBackgroundColor(colors["dark_grey"]);
 		this->textFields.push_back(textField);
 		index++;
 	}

@@ -6,17 +6,21 @@ std::vector<std::shared_ptr<Item>> ItemGenerator::generateItems(std::vector<int>
 
 	for (int level : enemyLevels) {
 		switch (type) {
-		case ItemTypes::SWORD:
-			items.push_back(generateSword(level));
-			items.push_back(generateSword(level));
-			items.push_back(generateSword(level));
-			items.push_back(generateSword(level));
+			case ItemTypes::SWORD:
+				items.push_back(generateSword(level));
+				items.push_back(generateSword(level));
+				items.push_back(generateSword(level));
+				items.push_back(generateSword(level));
+				items.push_back(generateSword(level));
+				items.push_back(generateSword(level));
+				items.push_back(generateSword(level));
+				items.push_back(generateSword(level));
 		}
 	}
 	return items;
 }
 
-std::shared_ptr<Sword> ItemGenerator::generateSword(int enemyLevel){
+std::shared_ptr<Sword> ItemGenerator::generateSword(int enemyLevel) {
 
 	ItemRarities rarity;
 	float rarityRoll = utils::randFloat(0, 1);
@@ -46,7 +50,7 @@ std::shared_ptr<Sword> ItemGenerator::generateSword(int enemyLevel){
 	for (int i = 0; i < static_cast<int>(rarity); i++) {
 		OptSwordProperties optProperties = static_cast<OptSwordProperties>(
 			rand() % static_cast<int>(OptSwordProperties::LAST_ELEMENT)
-		);
+			);
 		switch (optProperties) {
 			case OptSwordProperties::CRIT_CHANCE:
 				if (properties.critChance < 0.0f) {
@@ -54,7 +58,7 @@ std::shared_ptr<Sword> ItemGenerator::generateSword(int enemyLevel){
 				}
 				properties.critChance += (3.0f + static_cast<int>(rarity)) * 2;
 				break;
-			case OptSwordProperties::DAMAGE_PERCENT:{ //added scope so that i can init variable in here
+			case OptSwordProperties::DAMAGE_PERCENT: { //added scope so that i can init variable in here
 				if (properties.damagePercent < 0.0f) {
 					properties.damagePercent = 0.0f;
 				}

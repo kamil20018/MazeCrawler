@@ -23,6 +23,8 @@ enum class ItemTypes {
 	SWORD,
 	HELMET,
 	BOOTS,
+	SHIELD,
+	BREAST_PLATE,
 	LAST_ELEMENT
 };
 
@@ -34,6 +36,53 @@ enum class ItemRarities {
 	LEGENDARY,
 	LAST_ELEMENT
 };
+
+inline std::string itemEnumToString(ItemTypes itemType) {
+	switch (itemType) {
+		case ItemTypes::SWORD:
+			return "sword";
+		case ItemTypes::BOOTS:
+			return "boots";
+		case ItemTypes::HELMET:
+			return "helmet";
+		case ItemTypes::SHIELD:
+			return "shield";
+		case ItemTypes::BREAST_PLATE:
+			return "breastplate";
+	}
+}
+
+inline std::string itemEnumToString(ItemRarities itemRarity) {
+	switch (itemRarity) {
+		case ItemRarities::COMMON:
+			return "common";
+		case ItemRarities::UNCOMMON:
+			return "uncommon";
+		case ItemRarities::RARE:
+			return "rare";
+		case ItemRarities::EPIC:
+			return "epic";
+		case ItemRarities::LEGENDARY:
+			return "legendary";
+		case ItemRarities::LAST_ELEMENT:
+			return "last element isn't rarity";
+	}
+	return ""; //won't be returned, all cases were covered
+}
+
+inline std::string itemEnumToString(OptSwordProperties property) {
+	switch (property) {
+		case OptSwordProperties::CRIT_CHANCE:
+			return "crit chance";
+		case OptSwordProperties::DAMAGE_PERCENT:
+			return "damage percent";
+		case OptSwordProperties::FIRE_BONUS:
+			return "fire bonus";
+		case OptSwordProperties::LAST_ELEMENT:
+			return "last element isn't a property";
+	}
+	return ""; //won't return anything, all cases are covered
+}
 
 inline std::ostream& operator<<(std::ostream& os, ItemRarities rarity){
 	switch (rarity) {

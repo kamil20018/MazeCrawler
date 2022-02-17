@@ -14,7 +14,7 @@ MainMenu::~MainMenu()
 }
 
 void MainMenu::Init(){
-    context->assets->AddFont("pixel_font", "Resources/Fonts/manaspc.ttf");
+
 
     // Title
     gameTitle.setFont(context->assets->GetFont("pixel_font"));

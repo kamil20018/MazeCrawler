@@ -11,7 +11,7 @@ Game::Game() : context(std::make_shared<Context>()) {
 	this->context->window->setFramerateLimit(60);
 
 	//this->context->states->AddState(std::make_shared<UiTestState>(this->context));
-
+	this->context->assets->AddFont("pixel_font", "Resources/Fonts/manaspc.ttf");
 	this->context->states->AddState(std::make_unique<MainMenu>(this->context));
 	this->context->states->InitInventory(this->context);
 }

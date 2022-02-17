@@ -85,6 +85,7 @@ void StateManager::ToInventoryState(){
 
 void StateManager::InitInventory(std::shared_ptr<Context>& context){
 	this->inventoryState = std::make_shared<InventoryState>(context);
+	this->inventoryState->Init();
 }
 
 std::shared_ptr<State>& StateManager::GetCurrent() {

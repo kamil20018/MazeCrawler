@@ -15,10 +15,10 @@ class ItemGenerator{
 
 	private:
 		//temporary hardcoaded solution
-		const float COMMON_CHANCE = 0.65f;
-		const float UNCOMMON_CHANCE = 0.83f;
-		const float	RARE_CHANCE = 0.91f;
-		const float	EPIC_CHANCE = 0.96f;
-		const float	LEGENDARY_CHANCE = 0.99f;
+		const float COMMON_CHANCE = 0.20f;
+		const float UNCOMMON_CHANCE = 0.40f;
+		const float	RARE_CHANCE = 0.60f;
+		const float	EPIC_CHANCE = 0.70f;
+		const float	LEGENDARY_CHANCE = 0.80f;
 };
 

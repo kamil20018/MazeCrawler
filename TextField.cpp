@@ -68,8 +68,6 @@ void TextField::update() {
 			this->text.setPosition(this->position + sf::Vector2f(fieldWidth - textWidth - padding, vertCenter) + sf::Vector2f(-2.0f, -7.0f));
 			break;
 	}
-	this->text.setFillColor(colors["black"]);
-
 }
 
 
@@ -91,7 +89,7 @@ void TextField::setScalingBoundsSize(sf::Vector2f boundsSize) {
 
 void TextField::setHardBoundsSize(sf::Vector2f boundsSize) {
 	if (boundsSize.x < this->text.getGlobalBounds().width or boundsSize.y < this->text.getGlobalBounds().height) {
-		throw std::invalid_argument("received negative value");
+		//throw std::invalid_argument("bounds cannot contain the text");
 	}
 	this->hardBoundsSize = boundsSize;
 	update();
@@ -104,6 +102,7 @@ void TextField::setFontSize(int size) {
 
 void TextField::setFontColor(sf::Color color) {
 	this->text.setFillColor(color);
+	update();
 }
 
 void TextField::setSelected(bool selected) {

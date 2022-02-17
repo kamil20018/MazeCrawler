@@ -141,10 +141,12 @@ void ItemChooseState::Draw() {
 	}
 
 	//choosen item
-	this->baseProperties.setString(this->items[this->currentField]->getBaseStatString());
-	this->specialProperties.setString(this->items[this->currentField]->getSpecialStatString());
-	this->context->window->draw(this->baseProperties);
-	this->context->window->draw(this->specialProperties);
+	if (this->itemCount > 0) {
+		this->baseProperties.setString(this->items[this->currentField]->getBaseStatString());
+		this->specialProperties.setString(this->items[this->currentField]->getSpecialStatString());
+		this->context->window->draw(this->baseProperties);
+		this->context->window->draw(this->specialProperties);
+	}
 	this->context->window->display();
 }
 

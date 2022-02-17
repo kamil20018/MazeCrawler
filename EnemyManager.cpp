@@ -14,7 +14,7 @@ void EnemyManager::setEnemyList(std::vector<std::shared_ptr<Enemy>> enemyList) {
 
 void EnemyManager::removeDead() {
 	std::vector<int> deadEnemies;
-	for (int i = this->enemyList.size() - 1; i >= 0; i--) {
+	for (int i = (int)this->enemyList.size() - 1; i >= 0; i--) {
 		if (this->enemyList[i]->isDead()) {
 			deadEnemies.push_back(i);
 		}

@@ -15,8 +15,6 @@ TextField::TextField(std::string text, sf::Vector2f position, const sf::Font& fo
 	}
 
 	this->position = position;
-	this->padding = 0.0f;
-	this->wasSelected = false;
 	sf::Text temp;
 	temp.setFont(font);
 	temp.setString(text);

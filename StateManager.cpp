@@ -67,7 +67,7 @@ void StateManager::ProcessStateChange() {
 
 	if (this->swap and this->stateStack.size() >= 2) {
 		this->swap = false;
-		int swapIndex = this->stateStack.size() - 2;
+		int swapIndex = (int)this->stateStack.size() - 2;
 		std::shared_ptr<State> temp = this->stateStack[swapIndex];
 		this->stateStack.erase(this->stateStack.begin() + swapIndex);
 		this->stateStack.push_back(temp);

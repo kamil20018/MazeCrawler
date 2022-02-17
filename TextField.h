@@ -33,9 +33,9 @@ private:
 	sf::Text text;
 	sf::RectangleShape background;
 	sf::Font font;
-	Alignment alignment;
-	float padding;
-	bool scalingBounds;
-	bool hardBounds;
-	bool wasSelected;
+	Alignment alignment = Alignment::MIDDLE_MIDDLE;
+	float padding = 0.0f;
+	bool scalingBounds = false;
+	bool hardBounds = true;
+	bool wasSelected = false;
 };

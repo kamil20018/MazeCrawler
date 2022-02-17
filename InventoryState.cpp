@@ -76,7 +76,7 @@ void InventoryState::Update() {
         if (this->currColumn == 0) {
             this->colOneRow += this->changeRowBy;
             if (this->colOneRow < 0) {
-                this->colOneRow = this->itemTypeSelectors.size() - 1;
+                this->colOneRow = (int)this->itemTypeSelectors.size() - 1;
             }
             if (this->colOneRow >= this->itemTypeSelectors.size()) {
                 this->colOneRow = 0;
@@ -90,7 +90,7 @@ void InventoryState::Update() {
                     this->colTwoRow = 0;
                 }
                 else if (this->colTwoRow < 0) {
-                    this->colTwoRow = this->swords.size() - 1;
+                    this->colTwoRow = (int)this->swords.size() - 1;
                 }
             }
             else {
@@ -129,9 +129,9 @@ void InventoryState::Draw() {
     }
 
     if ((ItemTypes)this->colOneRow == ItemTypes::SWORD) {
-        int swordCount = this->swords.size();
+        int swordCount = (int)this->swords.size();
         if (swordCount > 0) {
-            float fieldHeight = SCREEN_HEIGHT / swordCount;
+            float fieldHeight = (float)SCREEN_HEIGHT / swordCount;
             for (int i = 0; i < swordCount; i++) {
                 TextField swordField(this->swords[i]->getDescription(),
                                      sf::Vector2f(SCREEN_WIDTH / 3.0f, fieldHeight * i),

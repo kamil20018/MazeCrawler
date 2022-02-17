@@ -2,7 +2,7 @@
 
 
 GamePlay::GamePlay(std::shared_ptr<Context>& context) : context(context), state(Turn::HERO_TURN) {
-    this->itemManagerOpen = false;
+    this->middlePos = 0.0f; //initialization just to get rid of a warning
     srand((unsigned int)time(NULL));
 }
 

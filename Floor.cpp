@@ -1,8 +1,6 @@
 #include "Floor.h"
 
 Floor::Floor(int width, int height, std::shared_ptr<Hero> hero, std::shared_ptr<EnemyManager> enemyManager) {
-    srand(time(NULL));
-
 	this->width = width;
 	this->height = height;
     this->hero = hero;
@@ -34,7 +32,6 @@ void Floor::generateMaze(sf::Vector2i entrance) {
 
     std::vector<std::vector<bool>> maze(height, std::vector<bool>(width, false));
     std::vector<sf::Vector2i> stack;
-    srand(time(NULL));
     maze[entrance.y][entrance.x] = true;
     stack.push_back(entrance);
 
@@ -90,7 +87,8 @@ const sf::Texture& Floor::getTexture() {
     sf::RectangleShape wallVer(sf::Vector2f(CELL_SIZE + 4, WALL_SIZE));
     wallHoz.setFillColor(sf::Color::Black);
     wallVer.setFillColor(sf::Color::Black);
-    this->renderTexture.create(this->width * CELL_SIZE, this->height * CELL_SIZE);
+    this->renderTexture.create((unsigned int)(this->width * CELL_SIZE), 
+                               (unsigned int)(this->height * CELL_SIZE));
 
     sf::RectangleShape visibleCell(sf::Vector2f(CELL_SIZE, CELL_SIZE));
     visibleCell.setFillColor(sf::Color::Blue);
@@ -196,6 +194,7 @@ bool Floor::isPathTo(sf::Vector2i startPos, sf::Vector2i dir) { // dir is suppos
             return not verticalWalls[startPos.y + 1][startPos.x];
         }
     }
+    return false; 
 }
 
 sf::Vector2i Floor::getHeroPos() {

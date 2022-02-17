@@ -50,6 +50,7 @@ inline std::string itemEnumToString(ItemTypes itemType) {
 		case ItemTypes::BREAST_PLATE:
 			return "breastplate";
 	}
+	return "";
 }
 
 inline std::string itemEnumToString(ItemRarities itemRarity) {

@@ -42,8 +42,8 @@ std::shared_ptr<Sword> ItemGenerator::generateSword(int enemyLevel) {
 	}
 
 	SwordProperties properties;
-	properties.minAttack = enemyLevel * 3 + utils::randInt(-2, 2);
-	properties.maxAttack = enemyLevel * 8 + utils::randInt(-2, 2);
+	properties.minAttack = enemyLevel * 3 + (float)utils::randInt(-2, 2);
+	properties.maxAttack = enemyLevel * 8 + (float)utils::randInt(-2, 2);
 	properties.weight = 1.5f + utils::randFloat(-0.3f, 0.3f);
 
 

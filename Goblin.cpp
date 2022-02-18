@@ -19,10 +19,27 @@ void Goblin::takeTurn() {
 	bool canGetToHero = true;
 
 	updatePathToHero();
-	while (canMove() and pathToHero.size() > 0) { //gets goblin as close as it can to hero
-		if (not this->floor->canMoveTo(this->position, pathToHero[0] - this->position)) break;
-		moveTo(pathToHero[0]);
-		pathToHero.erase(pathToHero.begin());
+	while (canMove() and pathToHero.size() >= 0) { //gets goblin as close as it can to hero
+		if (pathToHero.size() == 0) {
+			std::vector<sf::Vector2i> availableDirs;
+			for (sf::Vector2i dir : dirs) {
+				if (this->floor->canMoveTo(this->position, dir)) {
+					availableDirs.push_back(dir);
+				}
+			}
+			int dirCount = availableDirs.size();
+			if (dirCount == 0) {
+				break;
+			}
+			else {
+				moveTo(this->position + availableDirs[rand() % dirCount]);
+			}
+		}
+		else {
+			if (not this->floor->canMoveTo(this->position, pathToHero[0] - this->position)) break;
+			moveTo(pathToHero[0]);
+			pathToHero.erase(pathToHero.begin());
+		}
 		updatePathToHero();
 	}
 	if (pathToHero.size() == 1 and pathToHero[0] == this->floor->getHeroPos()) { // attacks if is next to hero
@@ -36,7 +53,6 @@ void Goblin::takeTurn() {
 	std::cout << "goblin took turn" << std::endl;
 	this->currEnergy = maxEnergy;
 }
-
 
 bool Goblin::canPerformAction() {
 	float moveEnergy = 100.0f / this->speed;

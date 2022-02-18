@@ -66,7 +66,6 @@ void InventoryState::ProcessInput() {
                 this->changeColBy = 1;
                 break;
             }
-
         }
     }
 }

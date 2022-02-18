@@ -93,6 +93,14 @@ void InventoryState::Update() {
                     this->colTwoRow = (int)this->swords.size() - 1;
                 }
             }
+            else if ((ItemTypes)this->colOneRow == ItemTypes::SHIELD) {
+                if (this->colTwoRow >= (int)this->shields.size()) {
+                    this->colTwoRow = 0;
+                }
+                else if (this->colTwoRow < 0) {
+                    this->colTwoRow = (int)this->shields.size() - 1;
+                }   
+            }
             else {
                 
                 this->colTwoRow = 0;
@@ -127,34 +135,44 @@ void InventoryState::Draw() {
             this->context->window->draw(this->itemTypeSelectors[i]);
         }
     }
+    switch ((ItemTypes)this->colOneRow) {
+        case ItemTypes::SWORD:
+            drawItemType(this->swords);
+            break;
+        case ItemTypes::SHIELD:
+            drawItemType(this->shields);
+            break;
+    }
 
-    if ((ItemTypes)this->colOneRow == ItemTypes::SWORD) {
-        int swordCount = (int)this->swords.size();
-        if (swordCount > 0) {
-            float fieldHeight = (float)SCREEN_HEIGHT / swordCount;
-            for (int i = 0; i < swordCount; i++) {
-                TextField swordField(this->swords[i]->getDescription(),
-                                     sf::Vector2f(SCREEN_WIDTH / 3.0f, fieldHeight * i),
-                                     this->context->assets->GetFont("pixel_font"), true);
-                swordField.setHardBoundsSize(sf::Vector2f(SCREEN_WIDTH / 3.0f, fieldHeight));
-                swordField.setBackgroundColor(colors["dark_grey"]);
-                swordField.setFontColor(colors["white"]);
-                swordField.setFontSize(20);
+    this->context->window->display();
+}
 
-                if (i == this->colTwoRow and this->currColumn == 1) {
-                    swordField.setSelected(true);
-                }
-                this->context->window->draw(swordField);
-                swordField.setSelected(false);
+template <typename T>
+void InventoryState::drawItemType(std::vector<std::shared_ptr<T>> itemList) {
+    int itemCount = itemList.size();
+    if (itemCount > 0) {
+        float fieldHeight = (float)SCREEN_HEIGHT / itemCount;
+        for (int i = 0; i < itemCount; i++) {
+            TextField itemField(itemList[i]->getDescription(),
+                                 sf::Vector2f(SCREEN_WIDTH / 3.0f, fieldHeight * i),
+                                 this->context->assets->GetFont("pixel_font"), true);
+            itemField.setHardBoundsSize(sf::Vector2f(SCREEN_WIDTH / 3.0f, fieldHeight));
+            itemField.setBackgroundColor(colors["dark_grey"]);
+            itemField.setFontColor(colors["white"]);
+            itemField.setFontSize(20);
+
+            if (i == this->colTwoRow and this->currColumn == 1) {
+                itemField.setSelected(true);
             }
+            this->context->window->draw(itemField);
+            itemField.setSelected(false);
         }
     }
     else {
         this->context->window->draw(this->itemNotImplemented);
     }
-
-    this->context->window->display();
 }
+
 
 States InventoryState::getState() {
     return States::INVENTORY;
@@ -167,9 +185,11 @@ void InventoryState::AddItems(std::vector<std::shared_ptr<Item>> newItems){
             case ItemTypes::SWORD:
                 this->swords.push_back(std::dynamic_pointer_cast<Sword>(item));
                 break;
-            case ItemTypes::BOOTS:
+            case ItemTypes::SHIELD:
+                this->shields.push_back(std::dynamic_pointer_cast<Shield>(item));
                 break;
         }
     }
 }
+
 

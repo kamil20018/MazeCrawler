@@ -4,6 +4,7 @@
 #include "SFML/Graphics.hpp"
 #include "Constants.h"
 #include "Sword.h"
+#include "Shield.h"
 #include "TextField.h"
 #include <memory>
 
@@ -20,9 +21,13 @@ class InventoryState : public State{
         States getState() override;
         void AddItems(std::vector<std::shared_ptr<Item>> newItems);
     private:
+        template<typename T>
+        void drawItemType(std::vector<std::shared_ptr<T>> itemList);
+
         std::shared_ptr<Context> context;
         std::vector<std::shared_ptr<Item>> items;
         std::vector<std::shared_ptr<Sword>> swords;
+        std::vector<std::shared_ptr<Shield>> shields;
         std::vector<TextField> itemTypeSelectors;
         TextField itemNotImplemented;
         int columnCount = 2; //3rd column is visual only

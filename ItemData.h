@@ -1,12 +1,21 @@
 #pragma once
 #include <iostream>
 #include <optional>
+
+enum class ItemTypes {
+	SWORD,
+	HELMET,
+	BOOTS,
+	SHIELD,
+	BREAST_PLATE,
+	LAST_ELEMENT
+};
+
 struct SwordProperties {
-	//must have
 	float minAttack = 0.0f;
 	float maxAttack = 10.0f;
 	float weight = 1.5f;
-	//optional
+
 	std::optional<float> critChance;
 	std::optional<float> damagePercent;
 	std::optional<float> fireBonus;
@@ -19,14 +28,24 @@ enum class OptSwordProperties {
 	LAST_ELEMENT
 };
 
-enum class ItemTypes {
-	SWORD,
-	HELMET,
-	BOOTS,
-	SHIELD,
-	BREAST_PLATE,
+struct ShieldProperties {
+	float weight = 2.0f;
+	float defence = 0.0f;
+	float blockChance = 10.0f;
+
+	std::optional<float> bonusBlockChance;
+	std::optional<float> defensePercent;
+	std::optional<float> elementalResistance;
+};
+
+enum class OptShieldProperties {
+	BONUS_BLOCK_CHANCE,
+	DEFENSE_PERCENT,
+	ELEMENTAL_RESISTANCE,
 	LAST_ELEMENT
 };
+
+
 
 enum class ItemRarities {
 	COMMON,

@@ -18,17 +18,10 @@ Floor::Floor(int width, int height, std::shared_ptr<Hero> hero, std::shared_ptr<
     this->exit = sf::Vector2i(width * 4 / 5 + rand() % (width / 5), height * 4 / 5 + rand() % (height / 5));
 
     this->hero->setPosition(this->entrance);
-    generateMaze(this->entrance);
+    generateMazeAlt();
 }
 
-void Floor::generateMaze(sf::Vector2i entrance) {
-
-    std::vector<sf::Vector2i> dirs{
-        sf::Vector2i(1, 0),
-        sf::Vector2i(0, 1),
-        sf::Vector2i(-1, 0),
-        sf::Vector2i(0, -1)
-    };
+void Floor::generateMazeDfs(sf::Vector2i entrance) {
 
     std::vector<std::vector<bool>> maze(height, std::vector<bool>(width, false));
     std::vector<sf::Vector2i> stack;
@@ -70,6 +63,100 @@ void Floor::generateMaze(sf::Vector2i entrance) {
             }
         }
     }
+}
+
+void Floor::generateMazeAlt() {
+    std::vector<std::vector<bool>> maze(height, std::vector<bool>(width, false));
+    std::vector<sf::Vector2i> stack;
+    maze[0][0] = true;
+    sf::Vector2i currCell = sf::Vector2i(0, 0);
+    while (not allVisited(maze)) {
+        utils::printVector(currCell);
+        std::vector<sf::Vector2i> possibleDirections;
+        for (sf::Vector2i dir : dirs) {
+            sf::Vector2i testPos = currCell + dir;
+            utils::printVector("testPos: ", testPos);
+            if (vectorInBounds(testPos) and not maze[testPos.y][testPos.x]) {
+                possibleDirections.push_back(testPos);
+            }
+        }
+        if (possibleDirections.empty()) {
+            bool found = false;
+            for (int j = 0; j < this->height; j++) {
+                if (found) {
+                    found = false;
+                    break;
+                }
+                for (int i = 0; i < this->width; i++) {
+                    if (not maze[j][i]) {
+                        currCell = sf::Vector2i(i, j);
+                        maze[j][i] = true;
+                        std::vector<sf::Vector2i> visitedDirs;
+                        for (sf::Vector2i dir : dirs) {
+                            sf::Vector2i testPos = currCell + dir;
+                            if (vectorInBounds(testPos) and maze[testPos.y][testPos.x]) {
+                                visitedDirs.push_back(dir);
+                                utils::printVector("visited dir", dir);
+                            }
+                        }
+                        sf::Vector2i dir = visitedDirs[rand() % visitedDirs.size()];
+                        if (dir.x != 0) {
+                            if (dir.x == -1) {
+                                horizontalWalls[currCell.y][currCell.x] = false;
+                            }
+                            else if (dir.x == 1) {
+                                horizontalWalls[currCell.y][currCell.x + 1] = false;
+                            }
+                        }
+                        else {
+                            if (dir.y == -1) {
+                                verticalWalls[currCell.y][currCell.x] = false;
+                            }
+                            else if (dir.y == 1) {
+                                verticalWalls[currCell.y + 1][currCell.x] = false;
+                            }
+                        }
+                        found = true;
+                        break;
+                    }
+                }
+            }
+        }
+        else {
+            sf::Vector2i nextCell = possibleDirections[rand() % possibleDirections.size()];
+            maze[nextCell.y][nextCell.x] = true;
+            sf::Vector2i dir = nextCell - currCell;
+            if (dir.x != 0) {
+                if (dir.x == -1) {
+                    horizontalWalls[currCell.y][currCell.x] = false;
+                }
+                else if (dir.x == 1) {
+                    horizontalWalls[currCell.y][currCell.x + 1] = false;
+                }
+            }
+            else {
+                if (dir.y == -1) {
+                    verticalWalls[currCell.y][currCell.x] = false;
+                }
+                else if (dir.y == 1) {
+                    verticalWalls[currCell.y + 1][currCell.x] = false;
+                }
+            }
+            currCell = nextCell;
+        }
+        
+    }
+}
+
+bool Floor::allVisited(std::vector<std::vector<bool>> maze) {
+    for (std::vector<bool> row : maze) {
+        for (bool isCellVisited : row) {
+            if (not isCellVisited) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 bool Floor::vectorInBounds(sf::Vector2i pos) {

@@ -24,7 +24,7 @@ sf::Texture& Hero::getTexture() {
 bool Hero::move(sf::Vector2i dir) {
 	sf::Time currTime = clock.getElapsedTime();
 	float moveEnergy = 100.0f / this->speed;
-	if ((currTime - lastMoved).asSeconds() > 0.15 and moveEnergy < this->currEnergy) {
+	if ((currTime - lastMoved).asSeconds() > 0.05 and moveEnergy < this->currEnergy) {
 		this->currEnergy -= moveEnergy;
 		lastMoved = currTime;
 		this->position += dir;

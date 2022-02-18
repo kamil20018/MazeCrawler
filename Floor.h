@@ -26,7 +26,9 @@ class Floor {
 		std::vector<std::vector<bool>> horizontalWalls;
 		std::vector<std::vector<bool>> verticalWalls;
 		std::vector<std::vector<bool>> seenCells;
-		void generateMaze(sf::Vector2i entrance);
+		void generateMazeDfs(sf::Vector2i entrance);
+		void generateMazeAlt();
+		bool allVisited(std::vector<std::vector<bool>> maze);
 		bool vectorInBounds(sf::Vector2i pos);
 		int width;
 		int height;

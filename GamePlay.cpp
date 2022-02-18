@@ -35,9 +35,6 @@ void GamePlay::Init(){
     this->attackListener = std::make_shared<AttackListener>(this->hero, this->enemyManager);
     this->hero->setAttackListener(this->attackListener);
     this->enemyManager->setAttackListener(this->attackListener);
-    //this->enemyManager->addEnemy(goblin1);
-    //this->enemyManager->addEnemy(goblin2);
-    //this->enemyManager->addEnemy(goblin3);
 
     this->middlePos = (float)(this->WINDOW_HEIGHT - 75) / 2;
 }

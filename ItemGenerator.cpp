@@ -5,9 +5,10 @@ std::vector<std::shared_ptr<Item>> ItemGenerator::generateItems(std::vector<int>
 	ItemTypes type = ItemTypes::SWORD;
 
 	for (int level : enemyLevels) {
-		for (int i = 0; i < 4; i++) { //more items for debug purposes
+		for (int i = 0; i < 3; i++) { //more items for debug purposes
 			items.push_back(generateSword(level));
 			items.push_back(generateShield(level));
+			items.push_back(generateBoots(level));
 		}
 	}
 	return items;
@@ -82,7 +83,7 @@ std::shared_ptr<Shield> ItemGenerator::generateShield(int enemyLevel) {
 	ShieldProperties properties;
 	properties.weight = 2.0f + utils::randFloat(-0.5f, 0.5f);
 	properties.defence = (10.0f + (float)utils::randInt(-3, 3)) * enemyLevel;
-	properties.blockChance = 15.0f + 2.0f * enemyLevel + (float)utils::randInt(-3.0f, 3.0f);
+	properties.blockChance = 15.0f + 2.0f * enemyLevel + (float)utils::randInt(-3, 3);
 
 	for (int i = 0; i < static_cast<int>(rarity); i++) {
 		OptShieldProperties optProperties = (OptShieldProperties)(rand() % (int)(OptShieldProperties::LAST_ELEMENT));
@@ -109,4 +110,32 @@ std::shared_ptr<Shield> ItemGenerator::generateShield(int enemyLevel) {
 	}
 
 	return std::make_shared<Shield>(ItemTypes::SHIELD, rarity, enemyLevel, properties);
+}
+
+std::shared_ptr<Boots> ItemGenerator::generateBoots(int enemyLevel) {
+	ItemRarities rarity = getRarity();
+	BootsProperties properties;
+	properties.defence = (float)utils::randInt(5, 10) * enemyLevel;
+	properties.weight = utils::randFloat(0.7f, 1.3f);
+	properties.moveCostReduction = utils::randFloat(8.0f, 12.0f) + enemyLevel * utils::randFloat(0.5f, 1.5f);
+
+	for (int i = 0; i < static_cast<int>(rarity); i++) {
+		OptBootsProperties optProperties = (OptBootsProperties)(rand() % (int)(OptBootsProperties::LAST_ELEMENT));
+		switch (optProperties) {
+			case OptBootsProperties::DEFENCE_BONUS: {
+				initOptionalFloat(properties.defenceBonus);
+				float newAmount = properties.defenceBonus.value() + (float)utils::randInt(3, 6);
+				properties.defenceBonus.emplace(newAmount);
+				break;
+			}
+			case OptBootsProperties::MOVE_COST_BONUS: {
+				initOptionalFloat(properties.moveCostBonus);
+				float newAmount = properties.moveCostBonus.value() + (float)utils::randInt(4, 5);
+				properties.moveCostBonus.emplace(newAmount);
+				break;
+			}
+		}
+	}
+
+	return std::make_shared<Boots>(ItemTypes::BOOTS, rarity, enemyLevel, properties);
 }

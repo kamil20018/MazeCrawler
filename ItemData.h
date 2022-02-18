@@ -45,6 +45,21 @@ enum class OptShieldProperties {
 	LAST_ELEMENT
 };
 
+struct BootsProperties {
+	float weight = 1.0f;
+	float defence = 5.0f;
+	float moveCostReduction = 10.0f;
+
+	std::optional<float> defenceBonus;
+	std::optional<float> moveCostBonus;
+};
+
+enum class OptBootsProperties {
+	DEFENCE_BONUS,
+	MOVE_COST_BONUS,
+	LAST_ELEMENT
+};
+
 
 
 enum class ItemRarities {

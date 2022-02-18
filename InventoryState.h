@@ -5,6 +5,7 @@
 #include "Constants.h"
 #include "Sword.h"
 #include "Shield.h"
+#include "Boots.h"
 #include "TextField.h"
 #include <memory>
 
@@ -28,6 +29,7 @@ class InventoryState : public State{
         std::vector<std::shared_ptr<Item>> items;
         std::vector<std::shared_ptr<Sword>> swords;
         std::vector<std::shared_ptr<Shield>> shields;
+        std::vector<std::shared_ptr<Boots>> boots;
         std::vector<TextField> itemTypeSelectors;
         TextField itemNotImplemented;
         int columnCount = 2; //3rd column is visual only

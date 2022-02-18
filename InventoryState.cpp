@@ -85,24 +85,30 @@ void InventoryState::Update() {
 
         if (this->currColumn == 1) {
             this->colTwoRow += this->changeRowBy;
-            if ((ItemTypes)this->colOneRow == ItemTypes::SWORD) {
-                if (this->colTwoRow >= (int)this->swords.size()) {
-                    this->colTwoRow = 0;
-                }
-                else if (this->colTwoRow < 0) {
-                    this->colTwoRow = (int)this->swords.size() - 1;
-                }
+            int itemCount;
+            switch ((ItemTypes)this->colOneRow) {
+                case ItemTypes::SWORD:
+                    itemCount = (int)this->swords.size();
+                    break;
+                case ItemTypes::SHIELD:
+                    itemCount = (int)this->shields.size();
+                    break;
+                case ItemTypes::BOOTS:
+                    itemCount = (int)this->boots.size();
+                    break;
+                default:
+                    itemCount = 0;
+                    break;
             }
-            else if ((ItemTypes)this->colOneRow == ItemTypes::SHIELD) {
-                if (this->colTwoRow >= (int)this->shields.size()) {
+            if (itemCount > 0) {
+                if (this->colTwoRow >= itemCount) {
                     this->colTwoRow = 0;
                 }
                 else if (this->colTwoRow < 0) {
-                    this->colTwoRow = (int)this->shields.size() - 1;
-                }   
+                    this->colTwoRow = itemCount - 1;
+                }
             }
             else {
-                
                 this->colTwoRow = 0;
             }
         }
@@ -120,7 +126,6 @@ void InventoryState::Update() {
         }
         this->changeColBy = 0;
     }
-
 }
 
 void InventoryState::Draw() {
@@ -142,6 +147,9 @@ void InventoryState::Draw() {
         case ItemTypes::SHIELD:
             drawItemType(this->shields);
             break;
+        case ItemTypes::BOOTS:
+            drawItemType(this->boots);
+            break;
     }
 
     this->context->window->display();
@@ -149,7 +157,7 @@ void InventoryState::Draw() {
 
 template <typename T>
 void InventoryState::drawItemType(std::vector<std::shared_ptr<T>> itemList) {
-    int itemCount = itemList.size();
+    int itemCount = (int)itemList.size();
     if (itemCount > 0) {
         float fieldHeight = (float)SCREEN_HEIGHT / itemCount;
         for (int i = 0; i < itemCount; i++) {
@@ -188,8 +196,9 @@ void InventoryState::AddItems(std::vector<std::shared_ptr<Item>> newItems){
             case ItemTypes::SHIELD:
                 this->shields.push_back(std::dynamic_pointer_cast<Shield>(item));
                 break;
+            case ItemTypes::BOOTS:
+                this->boots.push_back(std::dynamic_pointer_cast<Boots>(item));
+                break;
         }
     }
 }
-
-

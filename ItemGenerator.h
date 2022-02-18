@@ -8,12 +8,14 @@
 #include "Sword.h"
 #include "Shield.h"
 #include "Constants.h"
+#include "Boots.h"
 
 class ItemGenerator{
 	public:
 		std::vector<std::shared_ptr<Item>> generateItems(std::vector<int> enemyLevels);
 		std::shared_ptr<Sword> generateSword(int enemyLevel);
 		std::shared_ptr<Shield> generateShield(int enemyLevel);
+		std::shared_ptr<Boots> generateBoots(int enemyLevel);
 	private:
 		ItemRarities getRarity();
 		void initOptionalFloat(std::optional<float>& optional);

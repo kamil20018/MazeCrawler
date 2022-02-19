@@ -17,7 +17,7 @@ void GamePlay::Init(){
 
     this->enemyManager = std::make_shared<EnemyManager>();
     this->hero = std::make_shared<Hero>(sf::Vector2i(1, 1), this->context->assets->GetTexture("hero"));
-    this->floor = std::make_shared<Floor>(10, 10, hero, enemyManager);
+    this->floor = std::make_shared<Floor>(10, 12, hero, enemyManager);
 
     std::shared_ptr<Goblin> goblin1 = std::make_shared<Goblin>(sf::Vector2i(1, 1), this->floor);
     std::shared_ptr<Goblin> goblin2 = std::make_shared<Goblin>(sf::Vector2i(1, 2), this->floor);

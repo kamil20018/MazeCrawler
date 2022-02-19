@@ -18,7 +18,8 @@ Floor::Floor(int width, int height, std::shared_ptr<Hero> hero, std::shared_ptr<
     this->exit = sf::Vector2i(width * 4 / 5 + rand() % (width / 5), height * 4 / 5 + rand() % (height / 5));
 
     this->hero->setPosition(this->entrance);
-    generateMazeAlt();
+    //generateMazeAlt();
+    generateMazeWilson();
 }
 
 void Floor::generateMazeDfs(sf::Vector2i entrance) {
@@ -145,6 +146,95 @@ void Floor::generateMazeAlt() {
             currCell = nextCell;
         }
         
+    }
+}
+
+void Floor::generateMazeWilson() {
+    std::vector<std::vector<bool>> maze(height, std::vector<bool>(width, false));
+    maze[height - 1][width - 1] = true;
+    sf::Vector2i currCell = sf::Vector2i(0, 0);
+    std::vector<sf::Vector2i> path = { currCell };
+    while (not allVisited(maze)) {
+
+        bool pathConnected = false;
+        while (not pathConnected) {
+            utils::printVector("currCell: ", currCell);
+            std::vector<sf::Vector2i> possibleDirs;
+            for (sf::Vector2i dir : dirs) {
+                if (vectorInBounds(currCell + dir)) {
+                    if (path.size() > 1 and (path[path.size() - 2] != currCell + dir)) {
+                        possibleDirs.push_back(dir);
+                    }
+                    else if (path.size() == 1) {
+                        possibleDirs.push_back(dir);
+                    }
+                }
+            }
+            sf::Vector2i nextCell = currCell + possibleDirs[rand() % possibleDirs.size()];
+            //check if next cell is a part of path - we have to remove the resulting loop
+            std::optional<int> index;
+            for (int i = 0; i < path.size(); i++) {
+                if (path[i] == nextCell) {
+                    index.emplace(i);
+                    break;
+                }
+            }
+            if (index.has_value()) {
+                for (int i = path.size() - 1; i > index.value(); i--) {
+                    utils::printVector("erased: ", path[i]);
+                    path.erase(path.begin() + i);
+                }
+                currCell = path.back();
+                for (sf::Vector2i pos : path) {
+                    utils::printVector(pos);
+                }
+            }
+            else if (maze[currCell.y][currCell.x]) {
+                pathConnected = true;
+            }
+            else {
+                path.push_back(nextCell);
+                currCell = nextCell;
+            }
+        }
+        for (sf::Vector2i cell : path) {
+            maze[cell.y][cell.x] = true;
+        }
+        for (int i = 0; i < path.size() - 1; i++) {
+            sf::Vector2i pathCell = path[i];
+            sf::Vector2i dir = path[i + 1] - path[i];
+            if (dir.x != 0) {
+                if (dir.x == -1) {
+                    horizontalWalls[pathCell.y][pathCell.x] = false;
+                }
+                else if (dir.x == 1) {
+                    horizontalWalls[pathCell.y][pathCell.x + 1] = false;
+                }
+            }
+            else {
+                if (dir.y == -1) {
+                    verticalWalls[pathCell.y][pathCell.x] = false;
+                }
+                else if (dir.y == 1) {
+                    verticalWalls[pathCell.y + 1][pathCell.x] = false;
+                }
+            }
+        }
+        path.clear();
+        bool breakOut = false;
+        for (int x = 0; x < this->width; x++) {
+            if (breakOut) {
+                break;
+            }
+            for (int y = 0; y < this->height; y++) {
+                if (not maze[y][x]) {
+                    currCell = sf::Vector2i(x, y);
+                    path.push_back(currCell);
+                    breakOut = true;
+                    break;
+                }
+            }
+        }
     }
 }
 

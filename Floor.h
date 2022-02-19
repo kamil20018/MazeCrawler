@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <optional>
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Hero.h"
@@ -28,6 +29,7 @@ class Floor {
 		std::vector<std::vector<bool>> seenCells;
 		void generateMazeDfs(sf::Vector2i entrance);
 		void generateMazeAlt();
+		void generateMazeWilson();
 		bool allVisited(std::vector<std::vector<bool>> maze);
 		bool vectorInBounds(sf::Vector2i pos);
 		int width;

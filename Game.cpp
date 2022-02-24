@@ -10,10 +10,11 @@ Game::Game() : context(std::make_shared<Context>()) {
 	this->context->window->create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Maze Crawler", sf::Style::Close);
 	this->context->window->setFramerateLimit(60);
 
-	//this->context->states->AddState(std::make_shared<UiTestState>(this->context));
 	this->context->assets->AddFont("pixel_font", "Resources/Fonts/manaspc.ttf");
-	this->context->states->AddState(std::make_unique<MainMenu>(this->context));
-	this->context->states->InitInventory(this->context);
+	this->context->states->AddState(std::make_shared<UiTestState>(this->context));
+
+	//this->context->states->AddState(std::make_unique<MainMenu>(this->context));
+	//this->context->states->InitInventory(this->context);
 }
 
 Game::~Game() {

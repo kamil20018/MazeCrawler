@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "State.h"
 #include "Constants.h"
+#include "SkillBox.h"
 #include <memory>
 
 #include "TextField.h"
@@ -22,5 +23,6 @@ public:
 private:
 	std::shared_ptr<Context> context;
 	TextField field;
+	SkillBox box;
 };
 

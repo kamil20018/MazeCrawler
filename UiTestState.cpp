@@ -2,14 +2,10 @@
 
 UiTestState::UiTestState(std::shared_ptr<Context>& context) {
 	this->context = context;
-	context->assets->AddFont("pixel_font", "Resources/Fonts/manaspc.ttf");
-	TextField temp(std::string("testfd\ngdgfdfgdfgdgf"), sf::Vector2f(20.0f, 20.0f), this->context->assets->GetFont("pixel_font"), true);
-	this->field = temp;
-	this->field.setHardBoundsSize(sf::Vector2f(500.0f, 500.0f));
-	this->field.setSelected(true);
-	this->field.setSelected(false);
-	this->field.setAlignment(Alignment::MIDDLE_LEFT);
-	this->field.setPadding(100.0f);
+	this->context->assets->AddTexture("skill_1", "Resources/Textures/skill_1.png");
+	SkillBox box(sf::Vector2f(30.0f, 30.0f), sf::Vector2f(10.0f, 10.0f));
+	this->box = box;
+	this->box.setTexture(this->context->assets->GetTexture("skill_1"));
 }
 
 UiTestState::~UiTestState() {
@@ -43,7 +39,7 @@ void UiTestState::Update() {
 
 void UiTestState::Draw() {
 	this->context->window->clear(colors["green"]);
-	this->context->window->draw(field);
+	this->context->window->draw(this->box);
 	this->context->window->display();
 }
 

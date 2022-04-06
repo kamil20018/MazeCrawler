@@ -3,9 +3,9 @@
 UiTestState::UiTestState(std::shared_ptr<Context>& context) {
 	this->context = context;
 	this->context->assets->AddTexture("skill_1", "Resources/Textures/skill_1.png");
-	SkillBox box(sf::Vector2f(30.0f, 30.0f), sf::Vector2f(10.0f, 10.0f));
+	SkillBox box(this->context->assets->GetTexture("skill_1"), sf::Vector2f(100.0f, 100.0f), sf::Vector2f(200.0f, 100.0f));
+	box.setBgColor(colors["blue"]);
 	this->box = box;
-	this->box.setTexture(this->context->assets->GetTexture("skill_1"));
 }
 
 UiTestState::~UiTestState() {

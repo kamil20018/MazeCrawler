@@ -27,6 +27,8 @@ struct HeroData {
 	const float& xpToNextLevel;
 	const float& currEnergy;
 	const float& maxEnergy;
+	const float& currStamina;
+	const float& maxStamina;
 };
 
 struct EnemyLoot {
@@ -43,6 +45,7 @@ enum class States {
 
 namespace utils {
 	extern void printVector(sf::Vector2i vec);
+	extern void printVector(sf::Vector2f vec);
 	extern void printVector(std::string prefix, sf::Vector2i vec);
 	extern int vectorDistance(sf::Vector2i vec1, sf::Vector2i vec2);
 	extern int randInt(int lowerBound, int upperBound); //INCLUSIVE
